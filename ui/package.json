@@ -1,7 +1,7 @@
 {
   "name": "nuxt-app",
-  "private": true,
   "type": "module",
+  "private": true,
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",
-    "nuxt": "^3.21.4",
+    "nuxt": "^4.4.4",
     "tailwindcss": "^4.2.4",
     "vue": "^3.5.33",
-    "vue-router": "^5.0.6"
+    "vue-router": "^5.0.6",
+    "vite": "^7.3.2",
+    "vite-tsconfig-paths": "^6.1.1"
   }
 }
