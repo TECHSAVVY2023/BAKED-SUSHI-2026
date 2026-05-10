@@ -1,7 +1,7 @@
 <template>
   <div class="page">
-    <header class="topbar">
-      <div class="container topbar-inner">
+    <AppTopbar>
+      <template #left>
         <a class="brand" href="#top" @click.prevent="scrollTo('top')">
           <img class="brand-logo" :src="logo" alt="Baked Sushi logo" />
           <div class="brand-text">
@@ -9,20 +9,26 @@
             <div class="brand-tag">Scoop | Wrap | Munch | Repeat</div>
           </div>
         </a>
+      </template>
 
+      <template #center>
         <nav class="nav">
           <a class="nav-link" href="#menu" @click.prevent="scrollTo('menu')">Menu</a>
           <a class="nav-link" href="#how" @click.prevent="scrollTo('how')">How to Order</a>
           <a class="nav-link" href="#contact" @click.prevent="scrollTo('contact')">Contact</a>
         </nav>
+      </template>
+
+      <template #right>
+        <button class="btn login-btn" type="button" @click="loginOpen = true">Login</button>
 
         <button class="btn cart-btn" type="button" @click="cartOpen = true">
           <span class="dot" aria-hidden="true" />
           Cart
           <span v-if="cartCount" class="count" aria-label="Items in cart">{{ cartCount }}</span>
         </button>
-      </div>
-    </header>
+      </template>
+    </AppTopbar>
 
     <main id="top">
       <section class="hero">
@@ -306,6 +312,79 @@
       </footer>
     </main>
 
+    <div v-if="loginOpen" class="auth" role="dialog" aria-modal="true" aria-label="Login">
+      <div class="auth-backdrop" @click="loginOpen = false" />
+      <div class="auth-modal">
+        <button class="auth-close" type="button" aria-label="Close" @click="loginOpen = false">×</button>
+
+        <div class="auth-inner">
+          <div class="auth-left">
+            <div class="auth-brand">
+              <img class="auth-logo" :src="logo" alt="Baked Sushi logo" />
+              <div>
+                <div class="auth-name">Baked Sushi</div>
+                <div class="auth-tag muted">Scoop | Wrap | Munch | Repeat</div>
+              </div>
+            </div>
+
+            <div class="auth-title">Welcome back</div>
+            <div class="auth-sub muted">Sign in to continue</div>
+
+            <div class="auth-social">
+              <button class="btn auth-social-btn" type="button" @click="goDashboard">Continue with Google</button>
+              <button class="btn auth-social-btn" type="button" @click="goDashboard">Continue with Microsoft</button>
+            </div>
+
+            <div class="auth-divider" role="separator">
+              <span />
+              <span class="auth-divider-text">or</span>
+              <span />
+            </div>
+
+            <form class="auth-form" @submit.prevent="goDashboard">
+              <label class="auth-field">
+                <span class="auth-label">Email</span>
+                <input v-model="loginEmail" class="auth-input" type="email" autocomplete="email" placeholder="you@example.com" />
+              </label>
+
+              <label class="auth-field">
+                <span class="auth-label">Password</span>
+                <div class="auth-input-wrap">
+                  <input
+                    v-model="loginPassword"
+                    class="auth-input"
+                    :type="showLoginPassword ? 'text' : 'password'"
+                    autocomplete="current-password"
+                    placeholder="••••••••"
+                  />
+                  <button class="auth-ghost" type="button" @click="showLoginPassword = !showLoginPassword">
+                    {{ showLoginPassword ? 'Hide' : 'Show' }}
+                  </button>
+                </div>
+              </label>
+
+              <div class="auth-row">
+                <label class="auth-check">
+                  <input v-model="loginRemember" type="checkbox" />
+                  <span>Remember me</span>
+                </label>
+                <a class="auth-link" href="#" @click.prevent="noop">Forgot password?</a>
+              </div>
+
+              <button class="btn primary auth-submit" type="submit">Sign in</button>
+            </form>
+          </div>
+
+          <div class="auth-right">
+            <div class="auth-right-inner">
+              <img class="auth-right-logo" :src="logo" alt="" />
+              <div class="auth-right-title">Premium Baked Sushi</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div v-if="cartOpen" class="drawer" role="dialog" aria-modal="true" aria-label="Cart">
       <div class="drawer-backdrop" @click="cartOpen = false" />
       <div class="drawer-panel">
@@ -377,6 +456,7 @@ import heroVideoUrl from '~/assets/digital_assets/mp_.mp4?url'
 
 const logo = logoUrl
 const heroVideo = heroVideoUrl
+const router = useRouter()
 
 type MenuItem = {
   id: string
@@ -452,7 +532,13 @@ const menu: MenuItem[] = [
 const bestSeller = computed(() => menu.find((m) => m.isBestSeller))
 
 const cartOpen = ref(false)
+const loginOpen = ref(false)
 const cart = ref<CartLine[]>([])
+
+const loginEmail = ref('')
+const loginPassword = ref('')
+const loginRemember = ref(true)
+const showLoginPassword = ref(false)
 
 const cartCount = computed(() => cart.value.reduce((sum, line) => sum + line.qty, 0))
 const cartTotal = computed(() => cart.value.reduce((sum, line) => sum + line.price * line.qty, 0))
@@ -484,6 +570,13 @@ const menuByCategory = computed<Record<Category, MenuItem[]>>(() => {
 function scrollTo(id: string) {
   const el = document.getElementById(id)
   el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+function noop() {}
+
+function goDashboard() {
+  loginOpen.value = false
+  router.push('/dashboard')
 }
 
 function addToCart(item: MenuItem) {
@@ -626,23 +719,6 @@ function quickOrder() {
   box-shadow: 0 16px 30px rgba(242, 124, 134, 0.22);
 }
 
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  backdrop-filter: blur(12px);
-  background: rgba(255, 224, 228, 0.72);
-  border-bottom: 1px solid rgba(20, 12, 10, 0.1);
-}
-
-.topbar-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 12px 0;
-}
-
 .brand {
   display: flex;
   align-items: center;
@@ -673,14 +749,6 @@ function quickOrder() {
   margin-top: 2px;
 }
 
-.nav {
-  display: none;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-}
-
 .nav-link {
   padding: 10px 12px;
   border-radius: 999px;
@@ -696,6 +764,10 @@ function quickOrder() {
 }
 
 .cart-btn {
+  padding-inline: 14px;
+}
+
+.login-btn {
   padding-inline: 14px;
 }
 
@@ -1183,6 +1255,277 @@ function quickOrder() {
   grid-template-rows: auto 1fr;
 }
 
+.auth {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.auth-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 12, 10, 0.36);
+  backdrop-filter: blur(10px);
+}
+
+.auth-modal {
+  position: relative;
+  width: min(980px, 96vw);
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 40px 120px rgba(20, 12, 10, 0.45);
+  background: rgba(255, 255, 255, 0.78);
+  z-index: 2;
+}
+
+.auth-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(20, 12, 10, 0.12);
+  background: rgba(255, 255, 255, 0.86);
+  color: rgba(20, 12, 10, 0.82);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.auth-inner {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  min-height: 560px;
+}
+
+.auth-left {
+  padding: 34px 34px 28px;
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.auth-right {
+  position: relative;
+  background: linear-gradient(135deg, rgba(250, 128, 114, 1), rgba(214, 166, 74, 0.92));
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.auth-right::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.16), transparent 42%),
+    radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.12), transparent 46%),
+    radial-gradient(circle at 65% 85%, rgba(255, 255, 255, 0.1), transparent 48%);
+  opacity: 0.9;
+}
+
+.auth-right-inner {
+  position: relative;
+  height: 100%;
+  padding: 34px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.auth-right-logo {
+  width: min(320px, 72%);
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 40px rgba(20, 12, 10, 0.35));
+}
+
+.auth-right-title {
+  font-weight: 950;
+  letter-spacing: -0.02em;
+  font-size: 22px;
+}
+
+.auth-right-sub {
+  opacity: 0.92;
+  font-size: 14px;
+}
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.auth-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(20, 12, 10, 0.12);
+  background: rgba(255, 245, 247, 0.9);
+}
+
+.auth-name {
+  font-weight: 950;
+  line-height: 1.05;
+}
+
+.auth-title {
+  margin-top: 20px;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  font-weight: 950;
+}
+
+.auth-sub {
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+.auth-social {
+  margin-top: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.auth-social-btn {
+  justify-content: center;
+}
+
+.auth-divider {
+  margin: 18px 0 12px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.auth-divider span {
+  height: 1px;
+  background: rgba(20, 12, 10, 0.12);
+}
+
+.auth-divider-text {
+  font-size: 12px;
+  font-weight: 850;
+  color: rgba(20, 12, 10, 0.58);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.auth-form {
+  display: grid;
+  gap: 12px;
+}
+
+.auth-field {
+  display: grid;
+  gap: 8px;
+}
+
+.auth-label {
+  font-size: 12px;
+  font-weight: 900;
+  color: rgba(20, 12, 10, 0.72);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.auth-input-wrap {
+  position: relative;
+}
+
+.auth-input {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(20, 12, 10, 0.14);
+  background: rgba(255, 255, 255, 0.92);
+  color: rgba(20, 12, 10, 0.9);
+  outline: none;
+  transition: box-shadow 0.12s ease, border-color 0.12s ease;
+}
+
+.auth-input:focus {
+  border-color: rgba(242, 124, 134, 0.9);
+  box-shadow: 0 0 0 4px rgba(242, 124, 134, 0.18);
+}
+
+.auth-ghost {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(20, 12, 10, 0.12);
+  background: rgba(255, 255, 255, 0.7);
+  font-weight: 900;
+  color: rgba(20, 12, 10, 0.72);
+  cursor: pointer;
+}
+
+.auth-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.auth-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  color: rgba(20, 12, 10, 0.7);
+  font-size: 13px;
+}
+
+.auth-check input {
+  width: 16px;
+  height: 16px;
+  accent-color: rgb(242, 124, 134);
+}
+
+.auth-link {
+  font-size: 13px;
+  font-weight: 900;
+  color: rgba(242, 124, 134, 0.98);
+  text-decoration: none;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+.auth-submit {
+  margin-top: 2px;
+}
+
+@media (max-width: 860px) {
+  .auth-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-right {
+    min-height: 220px;
+  }
+
+  .auth-left {
+    padding: 26px 20px 22px;
+  }
+
+  .auth-right-inner {
+    padding: 26px 20px;
+  }
+}
+
 .drawer-head {
   padding: 14px;
   display: flex;
@@ -1264,10 +1607,6 @@ function quickOrder() {
 }
 
 @media (min-width: 860px) {
-  .nav {
-    display: flex;
-  }
-
   .hero-stats {
     grid-template-columns: repeat(3, 1fr);
   }
