@@ -505,7 +505,7 @@ watch(totalPages, (tp) => {
 })
 </script>
 
-<style scoped>
+<!-- Styles migrated to `ui/app/assets/css/main.css` -->
 .top-actions {
   display: flex;
   gap: 10px;
@@ -787,4 +787,4 @@ watch(totalPages, (tp) => {
     margin-left: 280px;
   }
 }
-</style>
+

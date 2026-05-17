@@ -1,39 +1,69 @@
-<template>
-  <div class="page">
+﻿<template>
+  <div
+    class="min-h-screen text-slate-900"
+    style="background: radial-gradient(1200px 700px at 16% -8%, rgba(242, 124, 134, 0.34), rgba(255, 255, 255, 0) 58%), radial-gradient(1100px 680px at 86% 0%, rgba(242, 161, 170, 0.22), rgba(255, 255, 255, 0) 60%), linear-gradient(180deg, rgba(255, 238, 241, 1), rgba(255, 247, 248, 1) 38%, rgba(255, 255, 255, 1) 100%);"
+  >
     <AppTopbar>
       <template #left>
-        <a class="brand" href="#top" @click.prevent="scrollTo('top')">
-          <img class="brand-logo" :src="logo" alt="Baked Sushi logo" />
-          <div class="brand-text">
-            <div class="brand-name">Baked Sushi</div>
-            <div class="brand-tag">Scoop | Wrap | Munch | Repeat</div>
+        <a
+          href="#top"
+          @click.prevent="scrollTo('top')"
+            class="flex min-w-[220px] items-center gap-3 text-slate-900 no-underline"
+          >
+          <img class="h-11 w-11 rounded-xl border border-slate-200 bg-white/70 object-cover" :src="logo" alt="Baked Sushi logo" />
+          <div>
+            <div class="font-black tracking-tight">Baked Sushi</div>
           </div>
         </a>
       </template>
 
       <template #center>
-        <nav class="nav">
-          <a class="nav-link" href="#menu" @click.prevent="scrollTo('menu')">Menu</a>
-          <a class="nav-link" href="#how" @click.prevent="scrollTo('how')">How to Order</a>
-          <a class="nav-link" href="#contact" @click.prevent="scrollTo('contact')">Contact</a>
+        <nav class="hidden items-center justify-center gap-2 sm:flex">
+          <a
+            href="#menu"
+            @click.prevent="scrollTo('menu')"
+            class="inline-flex items-center rounded-xl px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-[#f7c4ca]/50 hover:text-slate-900"
+          >
+            Menu
+          </a>
+          <a
+            href="#how"
+            @click.prevent="scrollTo('how')"
+            class="inline-flex items-center rounded-xl px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-[#f7c4ca]/50 hover:text-slate-900"
+          >
+            How to Order
+          </a>
+          <a
+            href="#contact"
+            @click.prevent="scrollTo('contact')"
+            class="inline-flex items-center rounded-xl px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-[#f7c4ca]/50 hover:text-slate-900"
+          >
+            Contact
+          </a>
         </nav>
       </template>
 
       <template #right>
-        <button class="btn login-btn" type="button" @click="loginOpen = true">Login</button>
+        <button class="inline-flex items-center justify-center gap-2 rounded-xl border border-[#f2a1aa]/45 bg-white/90 px-4 py-2 text-sm font-semibold text-slate-900 transition hover:border-[#f27c86] hover:bg-[#fff1f3] shadow-sm" type="button" @click="loginOpen = true">Login</button>
 
-        <button class="btn cart-btn" type="button" @click="cartOpen = true">
-          <span class="dot" aria-hidden="true" />
+        <button class="inline-flex items-center justify-center gap-2 rounded-xl border border-[#f2a1aa]/45 bg-white/90 px-4 py-2 text-sm font-semibold text-slate-900 transition hover:border-[#f27c86] hover:bg-[#fff1f3] shadow-sm" type="button" @click="cartOpen = true">
+          <span class="h-2.5 w-2.5 rounded-xl bg-gradient-to-r from-[#f27c86] to-[#d6a64a] shadow-[0_0_0_4px_rgba(242,124,134,0.16)]"></span>
           Cart
-          <span v-if="cartCount" class="count" aria-label="Items in cart">{{ cartCount }}</span>
+          <span
+            v-if="cartCount"
+            class="inline-flex min-w-[26px] items-center justify-center rounded-xl bg-slate-200/70 px-2 text-sm font-semibold"
+            aria-label="Items in cart"
+          >
+            {{ cartCount }}
+          </span>
         </button>
       </template>
     </AppTopbar>
 
     <main id="top">
-      <section class="hero">
+      <section class="relative grid min-h-[92vh] items-center overflow-hidden">
         <video
-          class="hero-video"
+          class="absolute inset-0 h-full w-full object-cover scale-[1.03] saturate-[1.1] contrast-[1.08]"
           autoplay
           muted
           loop
@@ -42,31 +72,38 @@
         >
           <source :src="heroVideo" type="video/mp4" />
         </video>
-        <div class="hero-overlay" />
 
-        <div class="container hero-inner">
-          <div class="pill">
-            <span aria-hidden="true">Hot</span>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_24%,rgba(255,255,255,0.12),rgba(242,124,134,0.42))] bg-[linear-gradient(180deg,rgba(255,225,230,0.18),rgba(242,124,134,0.44),rgba(255,233,236,0.82))]"></div>
+
+        <div class="relative z-10 mx-auto max-w-7xl px-4 py-10 sm:px-6">
+          <div class="inline-flex items-center gap-3 rounded-xl border border-[#f2a1aa]/45 bg-white/72 px-4 py-2 text-sm font-semibold shadow-sm backdrop-blur">
+            <span class="inline-flex h-6 items-center justify-center rounded-xl bg-slate-950 px-2 text-xs font-black text-white">Hot</span>
             Freshly baked | Made to order | Ozamiz
           </div>
 
-          <div class="hero-welcome">Welcome to</div>
+          <div class="mt-10 font-semibold tracking-tight text-[#9d4b56]">Welcome to</div>
 
-          <h1 class="hero-title">
+          <h1 class="mt-4 max-w-4xl text-5xl font-black tracking-tight leading-[0.95] sm:text-6xl">
             Baked Sushi
-            <span class="hero-script">Ozamiz</span>
+            <span class="block text-[#f27c86] italic font-black">Ozamiz</span>
           </h1>
 
-          <p class="hero-sub">
-            Freshly made. Perfectly baked. Made for every sushi lover.
+          <p class="mt-6 max-w-2xl text-base leading-7 text-slate-800/90">
+            Scoop | Wrap | Munch | Repeat
           </p>
 
-          <div class="hero-actions">
-            <a class="btn primary" href="#menu" @click.prevent="scrollTo('menu')">View Menu</a>
-            <button class="btn" type="button" @click="quickOrder()">Order Now</button>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a
+              href="#menu"
+              @click.prevent="scrollTo('menu')"
+              class="inline-flex items-center rounded-xl bg-gradient-to-r from-[#f27c86] to-[#d6a64a] px-6 py-3 text-sm font-semibold text-slate-950 shadow-xl transition hover:brightness-105"
+            >
+              View Menu
+            </a>
+            <button class="inline-flex items-center justify-center gap-2 rounded-xl border border-[#f2a1aa]/45 bg-[#fff4f5] px-6 py-3 text-sm font-semibold text-slate-900 transition hover:border-[#f27c86] hover:bg-white shadow-sm" type="button" @click="quickOrder()">Order Now</button>
             <button
               v-if="bestSeller"
-              class="btn"
+              class="inline-flex items-center justify-center gap-2 rounded-xl border border-[#f2a1aa]/45 bg-[#fff4f5] px-6 py-3 text-sm font-semibold text-slate-900 transition hover:border-[#f27c86] hover:bg-white shadow-sm"
               type="button"
               @click="scrollTo(`cat-${slug(bestSeller.category)}`)"
             >
@@ -74,140 +111,154 @@
             </button>
           </div>
 
-          <div class="hero-stats">
-            <div class="stat card">
-              <div class="card-inner">
-                <div class="stat-k">Large portions</div>
-                <div class="stat-v">party-ready trays</div>
+          <div class="mt-10 grid gap-4 sm:grid-cols-3">
+            <div class="overflow-hidden rounded-[1.125rem] border border-[#f2c0c7] bg-[rgba(255,244,246,0.88)] shadow-[0_18px_50px_rgba(242,124,134,0.14)]">
+              <div class="p-5">
+                <div class="font-black">Large portions</div>
+                <div class="mt-2 text-sm text-slate-700/70">party-ready trays</div>
               </div>
             </div>
-            <div class="stat card">
-              <div class="card-inner">
-                <div class="stat-k">Fast ordering</div>
-                <div class="stat-v">message us anytime</div>
+            <div class="overflow-hidden rounded-[1.125rem] border border-[#f2c0c7] bg-[rgba(255,244,246,0.88)] shadow-[0_18px_50px_rgba(242,124,134,0.14)]">
+              <div class="p-5">
+                <div class="font-black">Fast ordering</div>
+                <div class="mt-2 text-sm text-slate-700/70">message us anytime</div>
               </div>
             </div>
-            <div class="stat card">
+            <div class="card border-[#f2c0c7] bg-[rgba(255,244,246,0.88)] shadow-[0_18px_50px_rgba(242,124,134,0.14)]">
               <div class="card-inner">
-                <div class="stat-k">Made with care</div>
-                <div class="stat-v">fresh & flavorful</div>
+                <div class="font-black">Made with care</div>
+                <div class="mt-2 text-sm text-slate-700/70">fresh & flavorful</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="menu" class="section menu-section">
-        <div class="container">
-          <div class="section-head">
+      <section id="menu" class="py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6">
+          <div class="mb-8 flex flex-col gap-4 rounded-[1.25rem] bg-white/80 p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <h2 class="section-title menu-title">
-                Our Menu <span class="menu-heart" aria-hidden="true">♥</span>
-              </h2>
-              <p class="section-sub">Tap “Add” to build your order. You can edit prices/items later.</p>
+              <div class="flex flex-wrap items-center gap-3 text-3xl font-black tracking-tight sm:text-4xl">
+                <span>Our Menu</span>
+                <span class="text-[#f27c86]">♥</span>
+              </div>
+              <p class="mt-3 max-w-2xl text-sm text-slate-600">
+                Tap “Add” to build your order. You can edit prices/items later.
+              </p>
             </div>
-            <button class="btn" type="button" @click="cartOpen = true">Review Cart</button>
+            <button class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white/90 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-white shadow-sm" type="button" @click="cartOpen = true">Review Cart</button>
           </div>
 
-          <div class="category-tabs">
+          <div class="mb-6 flex flex-wrap gap-3 overflow-x-auto pb-2">
             <a
               v-for="cat in categoryOrder"
               :key="cat"
-              class="cat-tab"
               :href="`#cat-${slug(cat)}`"
               @click.prevent="scrollTo(`cat-${slug(cat)}`)"
+              class="inline-flex items-center gap-3 rounded-xl border border-slate-200 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
             >
               {{ cat }}
-              <span class="cat-count">{{ (menuByCategory[cat] || []).length }}</span>
+              <span class="inline-flex min-w-[22px] items-center justify-center rounded-xl bg-slate-200/70 px-2 text-xs font-semibold text-slate-700">
+                {{ (menuByCategory[cat] || []).length }}
+              </span>
             </a>
           </div>
 
-          <section
-            v-for="cat in categoryOrder"
-            :key="cat"
-            class="menu-category"
-            :id="`cat-${slug(cat)}`"
-          >
-            <div class="menu-cat-head">
-              <h3 class="menu-cat-title">{{ cat }}</h3>
-              <div class="menu-cat-sub muted">{{ (menuByCategory[cat] || []).length }} item(s)</div>
-            </div>
-
-            <div class="grid menu-grid">
-              <article
-                v-for="item in menuByCategory[cat]"
-                :key="item.id"
-                class="card product"
-              >
-                <div class="product-media">
-                  <div v-if="item.isBestSeller" class="best-badge">Best Seller</div>
-                  <img
-                    class="product-img"
-                    :src="item.image || logo"
-                    :alt="item.name"
-                    loading="lazy"
-                  />
+          <div class="space-y-10">
+            <section
+              v-for="cat in categoryOrder"
+              :key="cat"
+              :id="`cat-${slug(cat)}`"
+              class="space-y-4"
+            >
+              <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <h3 class="text-lg font-black tracking-tight">{{ cat }}</h3>
+                  <div class="text-sm text-slate-600">{{ (menuByCategory[cat] || []).length }} item(s)</div>
                 </div>
-                <div class="card-inner product-body">
-                  <div class="product-top">
-                    <div>
-                      <h4 class="product-name">{{ item.name }}</h4>
-                      <p class="product-desc muted">{{ item.description }}</p>
+              </div>
+
+              <div class="grid gap-4 sm:grid-cols-2">
+                <article
+                  v-for="item in menuByCategory[cat]"
+                  :key="item.id"
+                  class="overflow-hidden rounded-[1.125rem] border border-slate-200 bg-white/80 shadow-[0_18px_50px_rgba(15,23,42,0.08)]"
+                >
+                  <div class="relative aspect-[16/10] bg-slate-100/80">
+                    <div
+                      v-if="item.isBestSeller"
+                      class="absolute left-3 top-3 rounded-xl bg-slate-950 px-3 py-1 text-xs font-black text-white"
+                    >
+                      Best Seller
                     </div>
-                    <div class="product-price">
-                      <div class="price">{{ formatPeso(item.price) }}</div>
-                      <div class="muted price-note">{{ item.sizeLabel }}</div>
+                    <img
+                      class="absolute inset-0 h-full w-full object-cover"
+                      :src="item.image || logo"
+                      :alt="item.name"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="p-5">
+                    <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                      <div>
+                        <h4 class="text-lg font-black">{{ item.name }}</h4>
+                        <p class="mt-2 text-sm leading-6 text-slate-600">{{ item.description }}</p>
+                      </div>
+                      <div class="min-w-[120px] text-right">
+                        <div class="font-black">{{ formatPeso(item.price) }}</div>
+                        <div class="mt-1 text-xs text-slate-600">{{ item.sizeLabel }}</div>
+                      </div>
+                    </div>
+
+                    <div class="mt-4 flex flex-wrap gap-3">
+                      <button class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-gradient-to-r from-[#f27c86] to-[#d6a64a] px-5 py-2 text-sm font-semibold text-slate-950 transition hover:brightness-105 shadow-sm" type="button" @click="addToCart(item)">Add</button>
+                      <button class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white/90 px-5 py-2 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-white shadow-sm" type="button" @click="orderSingle(item)">Order this</button>
                     </div>
                   </div>
-
-                  <div class="product-actions">
-                    <button class="btn primary" type="button" @click="addToCart(item)">Add</button>
-                    <button class="btn" type="button" @click="orderSingle(item)">Order this</button>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </section>
+                </article>
+              </div>
+            </section>
+          </div>
         </div>
       </section>
 
-      <section id="how" class="section section-alt">
-        <div class="container">
-          <h2 class="section-title">How to order</h2>
-          <div class="grid how-grid">
+      <section id="how" class="py-20 bg-slate-50">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6">
+          <h2 class="text-3xl font-black tracking-tight">How to order</h2>
+          <div class="mt-8 grid gap-4 sm:grid-cols-3">
             <div class="card">
-              <div class="card-inner how-card">
-                <div class="how-step">1</div>
+              <div class="card-inner flex items-start gap-4">
+                <div class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-r from-[#f27c86] to-[#d6a64a] text-sm font-black text-white">1</div>
                 <div>
-                  <div class="how-title">Choose your tray</div>
-                  <div class="subtle">Add items to your cart from the menu.</div>
+                  <div class="font-black">Choose your tray</div>
+                  <div class="mt-2 text-sm text-slate-700/80">Add items to your cart from the menu.</div>
                 </div>
               </div>
             </div>
             <div class="card">
-              <div class="card-inner how-card">
-                <div class="how-step">2</div>
+              <div class="card-inner flex items-start gap-4">
+                <div class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-r from-[#f27c86] to-[#d6a64a] text-sm font-black text-white">2</div>
                 <div>
-                  <div class="how-title">Send your order</div>
-                  <div class="subtle">Checkout opens a message you can send to us.</div>
+                  <div class="font-black">Send your order</div>
+                  <div class="mt-2 text-sm text-slate-700/80">Checkout opens a message you can send to us.</div>
                 </div>
               </div>
             </div>
             <div class="card">
-              <div class="card-inner how-card">
-                <div class="how-step">3</div>
+              <div class="card-inner flex items-start gap-4">
+                <div class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-r from-[#f27c86] to-[#d6a64a] text-sm font-black text-white">3</div>
                 <div>
-                  <div class="how-title">Wait for confirmation</div>
-                  <div class="subtle">We’ll confirm availability, schedule, and total.</div>
+                  <div class="font-black">Wait for confirmation</div>
+                  <div class="mt-2 text-sm text-slate-700/80">We’ll confirm availability, schedule, and total.</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="notice card">
-            <div class="card-inner notice-inner">
-              <div class="notice-title">Tip</div>
-              <div class="notice-text">
+          <div class="mt-8 rounded-[1.125rem] border border-slate-200 bg-white/80 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
+            <div class="card-inner">
+              <div class="font-black">Tip</div>
+              <div class="mt-2 text-sm leading-6 text-slate-700/80">
                 For faster processing, include your name, delivery/pickup time, and address in the
                 message.
               </div>
@@ -216,38 +267,38 @@
         </div>
       </section>
 
-      <section id="contact" class="section">
-        <div class="container contact">
-          <div class="contact-left card">
+      <section id="contact" class="py-20">
+        <div class="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-[1.3fr_0.9fr]">
+          <div class="rounded-[1.125rem] border border-slate-200 bg-white/80 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
             <div class="card-inner">
-              <h2 class="section-title" style="margin-top: 0">Contact</h2>
-              <p class="section-sub">
+              <h2 class="text-3xl font-black">Contact</h2>
+              <p class="mt-3 max-w-xl text-sm text-slate-600">
                 Ready to order? Message or call us and we’ll reply ASAP.
               </p>
 
-              <div class="contact-actions">
-                <a class="btn primary" :href="`tel:${phoneNumber}`">Call {{ phonePretty }}</a>
-                <a class="btn" :href="smsLink">Text / SMS</a>
+              <div class="mt-6 flex flex-wrap gap-3">
+                <a class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-gradient-to-r from-[#f27c86] to-[#d6a64a] px-5 py-3 text-sm font-semibold text-slate-950 transition hover:brightness-105 shadow-sm" :href="`tel:${phoneNumber}`">Call {{ phonePretty }}</a>
+                <a class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white/90 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-white shadow-sm" :href="smsLink">Text / SMS</a>
               </div>
 
-              <div class="contact-meta">
-                <div class="meta-row">
-                  <span class="meta-k">Facebook</span>
-                  <span class="meta-v">Baked Sushi Ozamiz</span>
+              <div class="mt-6 grid gap-3 text-sm text-slate-600">
+                <div class="flex items-center justify-between border-t border-slate-200 pt-3">
+                  <span class="font-semibold text-slate-900">Facebook</span>
+                  <span>Baked Sushi Ozamiz</span>
                 </div>
-                <div class="meta-row">
-                  <span class="meta-k">Instagram</span>
-                  <span class="meta-v">@bakedsushiozamiz</span>
+                <div class="flex items-center justify-between border-t border-slate-200 pt-3">
+                  <span class="font-semibold text-slate-900">Instagram</span>
+                  <span>@bakedsushiozamiz</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="contact-right card">
+          <div class="rounded-[1.125rem] border border-slate-200 bg-white/80 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
             <div class="card-inner">
-              <div class="qr-wrap">
-                <img class="qr" :src="logo" alt="Baked Sushi" />
-                <div class="qr-note subtle">
+              <div class="grid place-items-center gap-4 text-center">
+                <img class="max-w-[260px] rounded-[1.125rem] border border-slate-200 bg-white/80 p-3" :src="logo" alt="Baked Sushi" />
+                <div class="text-sm text-slate-600">
                   Replace this with your official QR (GCash / FB / IG) when ready.
                 </div>
               </div>
@@ -256,191 +307,181 @@
         </div>
       </section>
 
-      <footer class="footer">
-        <div class="container footer-wrap">
-          <div class="footer-social" aria-label="Social links">
-            <a
-              class="social-btn"
-              href="https://www.facebook.com/bakedsushiOzamiz"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M13.5 22v-8.3h2.8l.4-3.2h-3.2V8.5c0-.9.3-1.6 1.7-1.6h1.7V4c-.3 0-1.5-.1-2.8-.1-2.8 0-4.7 1.7-4.7 4.8v1.8H6.5v3.2h2.9V22h4.1z"
-                />
-              </svg>
+      <footer class="border-t border-slate-200 bg-gradient-to-b from-white to-slate-50 py-14">
+        <div class="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-[auto_1fr_auto] lg:items-center">
+          <div class="flex items-center gap-3 text-slate-700" aria-label="Social links">
+            <a class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/80 text-slate-700 transition hover:bg-slate-50" href="https://www.facebook.com/bakedsushiOzamiz" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5" aria-hidden="true"><path d="M13.5 22v-8.3h2.8l.4-3.2h-3.2V8.5c0-.9.3-1.6 1.7-1.6h1.7V4c-.3 0-1.5-.1-2.8-.1-2.8 0-4.7 1.7-4.7 4.8v1.8H6.5v3.2h2.9V22h4.1z"/></svg>
             </a>
-            <a class="social-btn" href="#" aria-label="Instagram (update link)">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M7.7 2h8.6A5.7 5.7 0 0 1 22 7.7v8.6A5.7 5.7 0 0 1 16.3 22H7.7A5.7 5.7 0 0 1 2 16.3V7.7A5.7 5.7 0 0 1 7.7 2Zm0 2A3.7 3.7 0 0 0 4 7.7v8.6A3.7 3.7 0 0 0 7.7 20h8.6A3.7 3.7 0 0 0 20 16.3V7.7A3.7 3.7 0 0 0 16.3 4H7.7Zm4.3 4.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Zm0 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3ZM17.8 6.7a.9.9 0 1 1 0 1.8.9.9 0 0 1 0-1.8Z"
-                />
-              </svg>
+            <a class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/80 text-slate-700 transition hover:bg-slate-50" href="#" aria-label="Instagram (update link)">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5" aria-hidden="true"><path d="M7.7 2h8.6A5.7 5.7 0 0 1 22 7.7v8.6A5.7 5.7 0 0 1 16.3 22H7.7A5.7 5.7 0 0 1 2 16.3V7.7A5.7 5.7 0 0 1 7.7 2Zm0 2A3.7 3.7 0 0 0 4 7.7v8.6A3.7 3.7 0 0 0 7.7 20h8.6A3.7 3.7 0 0 0 20 16.3V7.7A3.7 3.7 0 0 0 16.3 4H7.7Zm4.3 4.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Zm0 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3ZM17.8 6.7a.9.9 0 1 1 0 1.8.9.9 0 0 1 0-1.8Z"/></svg>
             </a>
-            <a class="social-btn" href="#" aria-label="TikTok (update link)">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M16.6 3c.7 1.9 2 3.2 3.9 3.7v3.2c-1.7 0-3.2-.5-4.5-1.5v6.3c0 3.6-2.9 6.5-6.5 6.5S3 18.3 3 14.7s2.9-6.5 6.5-6.5c.5 0 1 .1 1.5.2v3.5c-.4-.2-.9-.3-1.5-.3-1.7 0-3.1 1.4-3.1 3.1S7.8 17.8 9.5 17.8s3.1-1.4 3.1-3.1V3h4z"
-                />
-              </svg>
+            <a class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/80 text-slate-700 transition hover:bg-slate-50" href="#" aria-label="TikTok (update link)">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5" aria-hidden="true"><path d="M16.6 3c.7 1.9 2 3.2 3.9 3.7v3.2c-1.7 0-3.2-.5-4.5-1.5v6.3c0 3.6-2.9 6.5-6.5 6.5S3 18.3 3 14.7s2.9-6.5 6.5-6.5c.5 0 1 .1 1.5.2v3.5c-.4-.2-.9-.3-1.5-.3-1.7 0-3.1 1.4-3.1 3.1S7.8 17.8 9.5 17.8s3.1-1.4 3.1-3.1V3h4z"/></svg>
             </a>
           </div>
 
-          <div class="footer-brand">
-            <img class="footer-logo" :src="logo" alt="Baked Sushi" />
-            <div class="footer-smallcaps">
-              <div class="footer-line">Baked Sushi Ozamiz</div>
-              <div class="footer-line muted">Scoop | Wrap | Munch | Repeat</div>
+          <div class="flex items-center gap-3">
+            <img class="h-11 w-11 rounded-2xl border border-slate-200 bg-white/80 object-cover" :src="logo" alt="Baked Sushi" />
+            <div>
+              <div class="font-black leading-tight">Baked Sushi Ozamiz</div>
+              <div class="text-sm text-slate-600">Scoop | Wrap | Munch | Repeat</div>
             </div>
           </div>
 
-          <div class="footer-legal">
-            <div class="legal muted">
-              © {{ new Date().getFullYear() }} Baked Sushi · Ozamiz. Thank you for the support!
-            </div>
-            <div class="legal-links">
-              <a class="muted" href="#top" @click.prevent="scrollTo('top')">Back to top</a>
-              <span class="sep" aria-hidden="true">•</span>
-              <a class="muted" href="#menu" @click.prevent="scrollTo('menu')">Menu</a>
-              <span class="sep" aria-hidden="true">•</span>
-              <a class="muted" href="#contact" @click.prevent="scrollTo('contact')">Contact</a>
+          <div class="grid gap-3 text-sm text-slate-600">
+            <div>Built for Baked Sushi, Ozamiz.</div>
+            <div class="flex flex-wrap items-center gap-2 text-slate-600">
+              <a class="hover:text-slate-900" href="#top" @click.prevent="scrollTo('top')">Back to top</a>
+              <span>•</span>
+              <a class="hover:text-slate-900" href="#menu" @click.prevent="scrollTo('menu')">Menu</a>
+              <span>•</span>
+              <a class="hover:text-slate-900" href="#contact" @click.prevent="scrollTo('contact')">Contact</a>
             </div>
           </div>
         </div>
       </footer>
     </main>
 
-    <div v-if="loginOpen" class="auth" role="dialog" aria-modal="true" aria-label="Login">
-      <div class="auth-backdrop" @click="loginOpen = false" />
-      <div class="auth-modal">
-        <button class="auth-close" type="button" aria-label="Close" @click="loginOpen = false">×</button>
-
-        <div class="auth-inner">
-          <div class="auth-left">
-            <div class="auth-brand">
-              <img class="auth-logo" :src="logo" alt="Baked Sushi logo" />
+    <div v-if="loginOpen" class="fixed inset-0 z-50 grid place-items-center p-6">
+      <div class="absolute inset-0 bg-slate-950/50 backdrop-blur-sm" @click="loginOpen = false"></div>
+      <div class="relative w-full max-w-5xl overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/80 shadow-[0_40px_120px_rgba(15,23,42,0.15)]">
+        <button
+          class="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-xl text-slate-700"
+          type="button"
+          aria-label="Close"
+          @click="loginOpen = false"
+        >
+          ×
+        </button>
+        <div class="grid min-h-[560px] grid-cols-1 gap-0 lg:grid-cols-[1.05fr_0.95fr]">
+          <div class="p-8 sm:p-10">
+            <div class="flex items-center gap-3">
+              <img class="h-11 w-11 rounded-2xl border border-slate-200 bg-white/80 object-cover" :src="logo" alt="Baked Sushi logo" />
               <div>
-                <div class="auth-name">Baked Sushi</div>
-                <div class="auth-tag muted">Scoop | Wrap | Munch | Repeat</div>
+                <div class="font-black">Baked Sushi</div>
+                <div class="text-xs text-slate-600">Scoop | Wrap | Munch | Repeat</div>
               </div>
             </div>
 
-            <div class="auth-title">Welcome back</div>
-            <div class="auth-sub muted">Sign in to continue</div>
+            <div class="mt-8 text-3xl font-black tracking-tight">Welcome back</div>
+            <div class="mt-3 text-sm text-slate-600">Sign in to continue</div>
 
-            <div class="auth-social">
-              <button class="btn auth-social-btn" type="button" @click="goDashboard">Continue with Google</button>
-              <button class="btn auth-social-btn" type="button" @click="goDashboard">Continue with Microsoft</button>
+            <div class="mt-8 grid gap-3">
+              <button class="inline-flex w-full items-center justify-center rounded-xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:brightness-110" type="button" @click="goDashboard">Continue with Google</button>
+              <button class="inline-flex w-full items-center justify-center rounded-xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:brightness-110" type="button" @click="goDashboard">Continue with Microsoft</button>
             </div>
 
-            <div class="auth-divider" role="separator">
-              <span />
-              <span class="auth-divider-text">or</span>
-              <span />
+            <div class="mt-8 grid gap-3 text-center text-xs uppercase tracking-[0.25em] text-slate-500 sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:text-left">
+              <span class="hidden sm:block h-px bg-slate-200"></span>
+              <span>or</span>
+              <span class="hidden sm:block h-px bg-slate-200"></span>
             </div>
 
-            <form class="auth-form" @submit.prevent="goDashboard">
-              <label class="auth-field">
-                <span class="auth-label">Email</span>
-                <input v-model="loginEmail" class="auth-input" type="email" autocomplete="email" placeholder="you@example.com" />
+            <form class="mt-8 grid gap-4" @submit.prevent="goDashboard">
+              <label class="grid gap-2 text-sm font-semibold text-slate-700">
+                <span class="uppercase tracking-[0.12em] text-xs text-slate-600">Email</span>
+                <input
+                  v-model="loginEmail"
+                  class="h-11 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-[#f27c86] focus:ring-2 focus:ring-[#f27c86]/20"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="you@example.com"
+                />
               </label>
 
-              <label class="auth-field">
-                <span class="auth-label">Password</span>
-                <div class="auth-input-wrap">
+              <label class="grid gap-2 text-sm font-semibold text-slate-700">
+                <span class="uppercase tracking-[0.12em] text-xs text-slate-600">Password</span>
+                <div class="relative">
                   <input
                     v-model="loginPassword"
-                    class="auth-input"
                     :type="showLoginPassword ? 'text' : 'password'"
+                    class="h-11 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 pr-20 text-sm outline-none transition focus:border-[#f27c86] focus:ring-2 focus:ring-[#f27c86]/20"
                     autocomplete="current-password"
                     placeholder="••••••••"
                   />
-                  <button class="auth-ghost" type="button" @click="showLoginPassword = !showLoginPassword">
+                  <button
+                    class="absolute right-3 top-1/2 -translate-y-1/2 rounded-xl border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-700"
+                    type="button"
+                    @click="showLoginPassword = !showLoginPassword"
+                  >
                     {{ showLoginPassword ? 'Hide' : 'Show' }}
                   </button>
                 </div>
               </label>
 
-              <div class="auth-row">
-                <label class="auth-check">
-                  <input v-model="loginRemember" type="checkbox" />
-                  <span>Remember me</span>
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <label class="inline-flex items-center gap-2 text-sm font-semibold text-slate-700">
+                  <input type="checkbox" v-model="loginRemember" class="h-4 w-4 rounded border-slate-300 text-[#f27c86] focus:ring-[#f27c86]" />
+                  Remember me
                 </label>
-                <a class="auth-link" href="#" @click.prevent="noop">Forgot password?</a>
+                <a class="text-sm font-semibold text-[#f27c86] hover:underline" href="#" @click.prevent="noop">Forgot password?</a>
               </div>
 
-              <button class="btn primary auth-submit" type="submit">Sign in</button>
+              <button class="inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-[#f27c86] to-[#d6a64a] px-5 py-3 text-sm font-semibold text-slate-950 shadow-sm transition hover:brightness-105" type="submit">Sign in</button>
             </form>
           </div>
 
-          <div class="auth-right">
-            <div class="auth-right-inner">
-              <img class="auth-right-logo" :src="logo" alt="" />
-              <div class="auth-right-title">Premium Baked Sushi</div>
+          <div class="relative bg-gradient-to-br from-[#fa8072] to-[#d6a64a] text-white/95">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.16),transparent_42%),radial-gradient(circle_at_80%_40%,rgba(255,255,255,0.12),transparent_46%),radial-gradient(circle_at_65%_85%,rgba(255,255,255,0.1),transparent_48%)] opacity-90"></div>
+            <div class="relative grid h-full place-items-center gap-4 p-10 text-center">
+              <img class="max-w-[320px] object-contain drop-shadow-[0_18px_40px_rgba(15,23,42,0.35)]" :src="logo" alt="" />
+              <div class="text-3xl font-black">Premium Baked Sushi</div>
+              <div class="text-sm">Order gifts, trays, and party sets in minutes.</div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div v-if="cartOpen" class="drawer" role="dialog" aria-modal="true" aria-label="Cart">
-      <div class="drawer-backdrop" @click="cartOpen = false" />
-      <div class="drawer-panel">
-        <div class="drawer-head">
+    <div v-if="cartOpen" class="fixed inset-0 z-50 grid place-items-center">
+      <div class="absolute inset-0 bg-slate-950/50 backdrop-blur-sm" @click="cartOpen = false"></div>
+      <div class="relative ml-auto flex h-full w-full max-w-[420px] flex-col bg-white/95 border-l border-slate-200 shadow-[0_40px_120px_rgba(15,23,42,0.12)]">
+        <div class="flex items-center justify-between gap-4 border-b border-slate-200 bg-white/80 px-5 py-4">
           <div>
-            <div class="drawer-title">Your cart</div>
-            <div class="muted">{{ cartCount }} item(s)</div>
+            <div class="text-lg font-black">Your cart</div>
+            <div class="text-sm text-slate-600">{{ cartCount }} item(s)</div>
           </div>
-          <button class="btn" type="button" @click="cartOpen = false">Close</button>
+          <button class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white/90 px-4 py-2 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-white shadow-sm" type="button" @click="cartOpen = false">Close</button>
         </div>
 
-        <div v-if="!cart.length" class="drawer-empty">
+        <div v-if="!cart.length" class="p-5">
           <div class="card">
-            <div class="card-inner">
-              <div class="drawer-empty-title">Cart is empty</div>
-              <div class="muted">Add items from the menu to start your order.</div>
-              <div style="margin-top: 12px">
-                <button class="btn primary" type="button" @click="goMenu()">Browse menu</button>
-              </div>
+            <div class="card-inner space-y-3">
+              <div class="text-lg font-black">Cart is empty</div>
+              <div class="text-sm text-slate-600">Add items from the menu to start your order.</div>
+              <button class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-gradient-to-r from-[#f27c86] to-[#d6a64a] px-5 py-3 text-sm font-semibold text-slate-950 transition hover:brightness-105 shadow-sm" type="button" @click="goMenu()">Browse menu</button>
             </div>
           </div>
         </div>
 
-        <div v-else class="drawer-body">
-          <div class="cart-list">
-            <div v-for="line in cart" :key="line.id" class="cart-item card">
-              <div class="card-inner cart-item-inner">
-                <div class="cart-item-left">
-                  <div class="cart-name">{{ line.name }}</div>
-                  <div class="muted">{{ formatPeso(line.price) }} each</div>
+        <div v-else class="flex h-full flex-col overflow-hidden">
+          <div class="flex-1 overflow-y-auto p-5 space-y-4">
+            <div v-for="line in cart" :key="line.id" class="card">
+              <div class="card-inner flex items-center justify-between gap-4">
+                <div>
+                  <div class="font-black">{{ line.name }}</div>
+                  <div class="text-sm text-slate-600">{{ formatPeso(line.price) }} each</div>
                 </div>
-                <div class="cart-item-right">
-                  <button class="btn qty" type="button" @click="dec(line.id)">-</button>
-                  <div class="qty-val" aria-label="Quantity">{{ line.qty }}</div>
-                  <button class="btn qty" type="button" @click="inc(line.id)">+</button>
+                <div class="flex items-center gap-2">
+                  <button class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white/90 px-0 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-white shadow-sm" type="button" @click="dec(line.id)">-</button>
+                  <div class="min-w-[26px] text-center font-black">{{ line.qty }}</div>
+                  <button class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white/90 px-0 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-white shadow-sm" type="button" @click="inc(line.id)">+</button>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="cart-summary card">
-            <div class="card-inner summary-inner">
-              <div class="summary-row">
-                <span class="muted">Subtotal</span>
+          <div class="border-t border-slate-200 bg-white/90 p-5">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between text-sm font-semibold text-slate-700">
+                <span>Subtotal</span>
                 <span>{{ formatPeso(cartTotal) }}</span>
               </div>
-              <div class="summary-row muted">
-                <span>Delivery fee</span>
-                <span>Depends on location</span>
-              </div>
-              <div class="summary-actions">
-                <button class="btn" type="button" @click="clearCart()">Clear</button>
-                <a class="btn primary" :href="checkoutLink" @click="cartOpen = false">Checkout</a>
-              </div>
-              <div class="muted" style="font-size: 12px; margin-top: 10px">
-                Checkout opens an SMS message. You can switch it to Messenger/WhatsApp later.
+              <div class="text-sm text-slate-600">Delivery and taxes calculated on message.</div>
+              <div class="flex flex-wrap gap-3">
+                <button class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white/90 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-white shadow-sm" type="button" @click="clearCart()">Clear</button>
+                <a class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-gradient-to-r from-[#f27c86] to-[#d6a64a] px-5 py-3 text-sm font-semibold text-slate-950 transition hover:brightness-105 shadow-sm" :href="checkoutLink">Checkout</a>
               </div>
             </div>
           </div>
@@ -637,996 +678,4 @@ function quickOrder() {
 }
 </script>
 
-<style scoped>
-.page {
-  min-height: 100vh;
-  color: rgba(20, 12, 10, 0.92);
-  background: radial-gradient(1200px 700px at 20% -10%, rgba(255, 224, 228, 0.9), rgba(255, 255, 255, 0)),
-    linear-gradient(180deg, rgba(255, 243, 245, 1), rgba(255, 255, 255, 1));
-}
-
-.container {
-  width: 100%;
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 18px;
-}
-
-.muted {
-  color: rgba(20, 12, 10, 0.62);
-}
-
-.subtle {
-  color: rgba(20, 12, 10, 0.72);
-  font-size: 14px;
-  line-height: 1.35;
-}
-
-.grid {
-  display: grid;
-  gap: 14px;
-}
-
-.card {
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(20, 12, 10, 0.12);
-  border-radius: 18px;
-  box-shadow: 0 18px 50px rgba(20, 12, 10, 0.08);
-  backdrop-filter: blur(10px);
-}
-
-.card-inner {
-  padding: 14px;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  height: 42px;
-  padding: 0 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(20, 12, 10, 0.16);
-  background: rgba(255, 255, 255, 0.72);
-  color: rgba(20, 12, 10, 0.92);
-  font-weight: 750;
-  letter-spacing: 0.01em;
-  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
-  text-decoration: none;
-}
-
-.btn:hover {
-  border-color: rgba(20, 12, 10, 0.22);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 10px 24px rgba(20, 12, 10, 0.12);
-  transform: translateY(-1px);
-}
-
-.btn:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
-
-.btn.primary {
-  border-color: rgba(242, 124, 134, 0.35);
-  background: linear-gradient(135deg, rgba(242, 124, 134, 1), rgba(214, 166, 74, 1));
-  color: rgba(20, 12, 10, 0.96);
-}
-
-.btn.primary:hover {
-  border-color: rgba(242, 124, 134, 0.5);
-  box-shadow: 0 16px 30px rgba(242, 124, 134, 0.22);
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 220px;
-  text-decoration: none;
-  color: inherit;
-}
-
-.brand-logo {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  object-fit: cover;
-  border: 1px solid rgba(20, 12, 10, 0.14);
-  background: rgba(255, 255, 255, 0.72);
-}
-
-.brand-name {
-  font-weight: 900;
-  letter-spacing: 0.02em;
-  line-height: 1.05;
-}
-
-.brand-tag {
-  font-size: 12px;
-  color: rgba(20, 12, 10, 0.65);
-  margin-top: 2px;
-}
-
-.nav-link {
-  padding: 10px 12px;
-  border-radius: 999px;
-  color: rgba(20, 12, 10, 0.72);
-  border: 1px solid transparent;
-  text-decoration: none;
-}
-
-.nav-link:hover {
-  color: rgba(20, 12, 10, 0.92);
-  border-color: rgba(20, 12, 10, 0.14);
-  background: rgba(255, 255, 255, 0.55);
-}
-
-.cart-btn {
-  padding-inline: 14px;
-}
-
-.login-btn {
-  padding-inline: 14px;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, rgba(242, 124, 134, 1), rgba(214, 166, 74, 1));
-  box-shadow: 0 0 0 4px rgba(242, 124, 134, 0.16);
-}
-
-.count {
-  display: inline-flex;
-  min-width: 26px;
-  height: 22px;
-  padding: 0 8px;
-  border-radius: 999px;
-  align-items: center;
-  justify-content: center;
-  background: rgba(20, 12, 10, 0.06);
-  border: 1px solid rgba(20, 12, 10, 0.12);
-  font-weight: 850;
-}
-
-.hero {
-  position: relative;
-  min-height: min(92vh, 780px);
-  display: grid;
-  align-items: center;
-  overflow: hidden;
-}
-
-.hero-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.03);
-  filter: saturate(1.1) contrast(1.08);
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(900px 520px at 16% 24%, rgba(255, 255, 255, 0.14), rgba(255, 210, 215, 0.64)),
-    linear-gradient(180deg, rgba(255, 227, 230, 0.22), rgba(255, 210, 215, 0.88));
-}
-
-.hero-inner {
-  position: relative;
-  z-index: 2;
-  padding: 34px 0 42px;
-}
-
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.66);
-  border: 1px solid rgba(20, 12, 10, 0.12);
-  font-weight: 750;
-  width: fit-content;
-}
-
-.pill span {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 22px;
-  padding: 0 10px;
-  border-radius: 999px;
-  background: rgba(20, 12, 10, 0.9);
-  color: rgba(255, 255, 255, 0.95);
-  font-weight: 900;
-  font-size: 12px;
-  letter-spacing: 0.04em;
-}
-
-.hero-welcome {
-  margin-top: 16px;
-  font-weight: 800;
-  color: rgba(20, 12, 10, 0.74);
-  letter-spacing: 0.01em;
-}
-
-.hero-title {
-  margin-top: 6px;
-  font-size: clamp(40px, 6vw, 64px);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  font-weight: 950;
-}
-
-.hero-script {
-  display: inline-block;
-  margin-left: 10px;
-  font-weight: 900;
-  font-style: italic;
-  letter-spacing: 0.01em;
-  color: rgba(242, 124, 134, 0.95);
-  text-shadow: 0 14px 40px rgba(242, 124, 134, 0.25);
-}
-
-.hero-sub {
-  margin-top: 10px;
-  max-width: 52ch;
-  font-size: 16px;
-  color: rgba(20, 12, 10, 0.72);
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 16px;
-}
-
-.hero-stats {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-top: 18px;
-  max-width: 720px;
-}
-
-.stat-k {
-  font-weight: 900;
-}
-
-.stat-v {
-  margin-top: 2px;
-  color: rgba(20, 12, 10, 0.68);
-  font-size: 13px;
-}
-
-.section {
-  padding: 44px 0;
-}
-
-.section-alt {
-  background: linear-gradient(180deg, rgba(255, 239, 242, 1), rgba(255, 255, 255, 1));
-}
-
-.section-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-}
-
-.section-title {
-  font-size: 28px;
-  line-height: 1.1;
-  font-weight: 950;
-  letter-spacing: -0.02em;
-}
-
-.section-sub {
-  margin-top: 6px;
-  color: rgba(20, 12, 10, 0.62);
-}
-
-.menu-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.menu-heart {
-  color: rgba(242, 124, 134, 1);
-}
-
-.category-tabs {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding: 8px 2px 12px;
-  margin-bottom: 12px;
-  scroll-snap-type: x mandatory;
-}
-
-.cat-tab {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(20, 12, 10, 0.12);
-  background: rgba(255, 255, 255, 0.72);
-  text-decoration: none;
-  color: inherit;
-  white-space: nowrap;
-  scroll-snap-align: start;
-}
-
-.cat-count {
-  display: inline-flex;
-  min-width: 22px;
-  height: 22px;
-  padding: 0 8px;
-  border-radius: 999px;
-  align-items: center;
-  justify-content: center;
-  background: rgba(20, 12, 10, 0.06);
-  border: 1px solid rgba(20, 12, 10, 0.12);
-  font-size: 12px;
-  font-weight: 850;
-}
-
-.menu-category {
-  margin-top: 20px;
-}
-
-.menu-cat-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.menu-cat-title {
-  font-size: 18px;
-  font-weight: 950;
-}
-
-.menu-grid {
-  grid-template-columns: 1fr;
-}
-
-.product {
-  overflow: hidden;
-}
-
-.product-media {
-  position: relative;
-  background: rgba(255, 255, 255, 0.4);
-  border-bottom: 1px solid rgba(20, 12, 10, 0.1);
-  aspect-ratio: 16 / 10;
-}
-
-.best-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 2;
-  padding: 8px 10px;
-  border-radius: 999px;
-  background: rgba(20, 12, 10, 0.88);
-  color: rgba(255, 255, 255, 0.96);
-  font-weight: 900;
-  font-size: 12px;
-}
-
-.product-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(1.02) contrast(1.02);
-}
-
-.product-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.product-name {
-  font-weight: 950;
-  font-size: 16px;
-  line-height: 1.2;
-}
-
-.product-desc {
-  margin-top: 6px;
-  font-size: 13px;
-  line-height: 1.35;
-}
-
-.product-price {
-  text-align: right;
-  min-width: 120px;
-}
-
-.price {
-  font-weight: 950;
-}
-
-.price-note {
-  margin-top: 2px;
-  font-size: 12px;
-}
-
-.product-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-  flex-wrap: wrap;
-}
-
-.how-grid {
-  grid-template-columns: 1fr;
-  margin-top: 14px;
-}
-
-.how-card {
-  display: flex;
-  gap: 14px;
-  align-items: center;
-}
-
-.how-step {
-  width: 36px;
-  height: 36px;
-  border-radius: 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 950;
-  background: linear-gradient(135deg, rgba(242, 124, 134, 1), rgba(214, 166, 74, 1));
-}
-
-.how-title {
-  font-weight: 950;
-}
-
-.notice {
-  margin-top: 14px;
-}
-
-.notice-inner {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-}
-
-.notice-title {
-  font-weight: 950;
-}
-
-.contact {
-  display: grid;
-  gap: 14px;
-}
-
-.contact-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 12px;
-}
-
-.contact-meta {
-  margin-top: 16px;
-  display: grid;
-  gap: 10px;
-}
-
-.meta-row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
-  border-top: 1px dashed rgba(20, 12, 10, 0.16);
-  padding-top: 10px;
-}
-
-.meta-k {
-  font-weight: 850;
-}
-
-.qr-wrap {
-  display: grid;
-  place-items: center;
-  text-align: center;
-  gap: 10px;
-}
-
-.qr {
-  width: min(260px, 100%);
-  border-radius: 18px;
-  border: 1px solid rgba(20, 12, 10, 0.12);
-  background: rgba(255, 255, 255, 0.8);
-  padding: 10px;
-}
-
-.footer {
-  padding: 26px 0 40px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(255, 239, 242, 1));
-  border-top: 1px solid rgba(20, 12, 10, 0.08);
-}
-
-.footer-wrap {
-  display: grid;
-  gap: 14px;
-  align-items: center;
-}
-
-.footer-social {
-  display: flex;
-  gap: 10px;
-}
-
-.social-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(20, 12, 10, 0.12);
-  background: rgba(255, 255, 255, 0.76);
-  color: rgba(20, 12, 10, 0.82);
-}
-
-.social-btn svg {
-  width: 20px;
-  height: 20px;
-  fill: currentColor;
-}
-
-.footer-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.footer-logo {
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
-  border: 1px solid rgba(20, 12, 10, 0.12);
-}
-
-.footer-line {
-  font-weight: 900;
-  line-height: 1.1;
-}
-
-.footer-legal {
-  display: grid;
-  gap: 10px;
-}
-
-.legal-links {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.sep {
-  opacity: 0.5;
-}
-
-.drawer {
-  position: fixed;
-  inset: 0;
-  z-index: 70;
-}
-
-.drawer-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(20, 12, 10, 0.36);
-  backdrop-filter: blur(6px);
-}
-
-.drawer-panel {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: min(420px, 92vw);
-  background: rgba(255, 245, 247, 0.92);
-  border-left: 1px solid rgba(20, 12, 10, 0.12);
-  display: grid;
-  grid-template-rows: auto 1fr;
-}
-
-.auth {
-  position: fixed;
-  inset: 0;
-  z-index: 80;
-  display: grid;
-  place-items: center;
-  padding: 18px;
-}
-
-.auth-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(20, 12, 10, 0.36);
-  backdrop-filter: blur(10px);
-}
-
-.auth-modal {
-  position: relative;
-  width: min(980px, 96vw);
-  border-radius: 22px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  box-shadow: 0 40px 120px rgba(20, 12, 10, 0.45);
-  background: rgba(255, 255, 255, 0.78);
-  z-index: 2;
-}
-
-.auth-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 40px;
-  height: 40px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(20, 12, 10, 0.12);
-  background: rgba(255, 255, 255, 0.86);
-  color: rgba(20, 12, 10, 0.82);
-  font-size: 22px;
-  line-height: 1;
-}
-
-.auth-inner {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  min-height: 560px;
-}
-
-.auth-left {
-  padding: 34px 34px 28px;
-  background: rgba(255, 255, 255, 0.94);
-}
-
-.auth-right {
-  position: relative;
-  background: linear-gradient(135deg, rgba(250, 128, 114, 1), rgba(214, 166, 74, 0.92));
-  color: rgba(255, 255, 255, 0.95);
-}
-
-.auth-right::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.16), transparent 42%),
-    radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.12), transparent 46%),
-    radial-gradient(circle at 65% 85%, rgba(255, 255, 255, 0.1), transparent 48%);
-  opacity: 0.9;
-}
-
-.auth-right-inner {
-  position: relative;
-  height: 100%;
-  padding: 34px;
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  text-align: center;
-  gap: 14px;
-}
-
-.auth-right-logo {
-  width: min(320px, 72%);
-  aspect-ratio: 1 / 1;
-  object-fit: contain;
-  filter: drop-shadow(0 18px 40px rgba(20, 12, 10, 0.35));
-}
-
-.auth-right-title {
-  font-weight: 950;
-  letter-spacing: -0.02em;
-  font-size: 22px;
-}
-
-.auth-right-sub {
-  opacity: 0.92;
-  font-size: 14px;
-}
-
-.auth-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.auth-logo {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  border: 1px solid rgba(20, 12, 10, 0.12);
-  background: rgba(255, 245, 247, 0.9);
-}
-
-.auth-name {
-  font-weight: 950;
-  line-height: 1.05;
-}
-
-.auth-title {
-  margin-top: 20px;
-  font-size: 28px;
-  letter-spacing: -0.02em;
-  font-weight: 950;
-}
-
-.auth-sub {
-  margin-top: 6px;
-  font-size: 14px;
-}
-
-.auth-social {
-  margin-top: 18px;
-  display: grid;
-  gap: 10px;
-}
-
-.auth-social-btn {
-  justify-content: center;
-}
-
-.auth-divider {
-  margin: 18px 0 12px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 12px;
-}
-
-.auth-divider span {
-  height: 1px;
-  background: rgba(20, 12, 10, 0.12);
-}
-
-.auth-divider-text {
-  font-size: 12px;
-  font-weight: 850;
-  color: rgba(20, 12, 10, 0.58);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
-
-.auth-form {
-  display: grid;
-  gap: 12px;
-}
-
-.auth-field {
-  display: grid;
-  gap: 8px;
-}
-
-.auth-label {
-  font-size: 12px;
-  font-weight: 900;
-  color: rgba(20, 12, 10, 0.72);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.auth-input-wrap {
-  position: relative;
-}
-
-.auth-input {
-  width: 100%;
-  height: 44px;
-  padding: 0 14px;
-  border-radius: 14px;
-  border: 1px solid rgba(20, 12, 10, 0.14);
-  background: rgba(255, 255, 255, 0.92);
-  color: rgba(20, 12, 10, 0.9);
-  outline: none;
-  transition: box-shadow 0.12s ease, border-color 0.12s ease;
-}
-
-.auth-input:focus {
-  border-color: rgba(242, 124, 134, 0.9);
-  box-shadow: 0 0 0 4px rgba(242, 124, 134, 0.18);
-}
-
-.auth-ghost {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 30px;
-  padding: 0 10px;
-  border-radius: 12px;
-  border: 1px solid rgba(20, 12, 10, 0.12);
-  background: rgba(255, 255, 255, 0.7);
-  font-weight: 900;
-  color: rgba(20, 12, 10, 0.72);
-  cursor: pointer;
-}
-
-.auth-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.auth-check {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 800;
-  color: rgba(20, 12, 10, 0.7);
-  font-size: 13px;
-}
-
-.auth-check input {
-  width: 16px;
-  height: 16px;
-  accent-color: rgb(242, 124, 134);
-}
-
-.auth-link {
-  font-size: 13px;
-  font-weight: 900;
-  color: rgba(242, 124, 134, 0.98);
-  text-decoration: none;
-}
-
-.auth-link:hover {
-  text-decoration: underline;
-}
-
-.auth-submit {
-  margin-top: 2px;
-}
-
-@media (max-width: 860px) {
-  .auth-inner {
-    grid-template-columns: 1fr;
-  }
-
-  .auth-right {
-    min-height: 220px;
-  }
-
-  .auth-left {
-    padding: 26px 20px 22px;
-  }
-
-  .auth-right-inner {
-    padding: 26px 20px;
-  }
-}
-
-.drawer-head {
-  padding: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  border-bottom: 1px solid rgba(20, 12, 10, 0.12);
-  background: rgba(255, 255, 255, 0.6);
-}
-
-.drawer-title {
-  font-weight: 950;
-  font-size: 16px;
-}
-
-.drawer-body {
-  padding: 14px;
-  overflow: auto;
-  display: grid;
-  gap: 14px;
-  align-content: start;
-}
-
-.drawer-empty {
-  padding: 14px;
-}
-
-.drawer-empty-title {
-  font-weight: 950;
-  font-size: 16px;
-}
-
-.cart-item-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.cart-name {
-  font-weight: 950;
-}
-
-.qty {
-  width: 40px;
-  padding: 0;
-}
-
-.qty-val {
-  width: 26px;
-  text-align: center;
-  font-weight: 950;
-}
-
-.cart-item-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.summary-inner {
-  display: grid;
-  gap: 10px;
-}
-
-.summary-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  font-weight: 850;
-}
-
-.summary-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 6px;
-}
-
-@media (min-width: 860px) {
-  .hero-stats {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .menu-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .how-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .contact {
-    grid-template-columns: 1.3fr 0.9fr;
-    align-items: start;
-  }
-
-  .footer-wrap {
-    grid-template-columns: auto 1fr auto;
-    justify-content: space-between;
-  }
-}
-</style>
+<!-- Styles moved to `ui/app/assets/css/main.css` (centralized Tailwind component classes) -->

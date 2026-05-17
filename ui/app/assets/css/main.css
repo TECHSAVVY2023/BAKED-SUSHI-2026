@@ -20,240 +20,12 @@ body {
   color: var(--ink);
 }
 
-/* Shared utils */
-.container {
-  width: 100%;
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 18px;
-}
+.page-actions { /* layout; page button styles centralized in @layer components */ }
 
-.muted {
-  color: var(--muted);
-}
-
-.mono {
-  font-variant-numeric: tabular-nums;
-}
-
-.sr {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.right {
-  text-align: right;
-}
-
-.center {
-  display: grid;
-  justify-items: center;
-}
-
-.strong {
-  font-weight: 950;
-}
-
-/* Buttons */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 42px;
-  padding: 0 14px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.7);
-  color: rgba(20, 12, 10, 0.9);
-  text-decoration: none;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background: rgba(255, 255, 255, 0.82);
-}
-
-.btn.primary {
-  background: linear-gradient(135deg, var(--salmon), var(--gold));
-  border-color: rgba(255, 255, 255, 0.22);
-  color: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 20px 40px rgba(242, 124, 134, 0.18);
-}
-
-/* Cards */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--card-border);
-  border-radius: 22px;
-  box-shadow: 0 22px 70px rgba(20, 12, 10, 0.08);
-  overflow: hidden;
-}
-
-.card-inner {
-  padding: 18px;
-}
-
-/* Brand */
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 220px;
-}
-
-.brand-logo {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  object-fit: cover;
-  border: 1px solid rgba(20, 12, 10, 0.14);
-  background: rgba(255, 255, 255, 0.72);
-}
-
-.brand-name {
-  font-weight: 950;
-  letter-spacing: 0.02em;
-  line-height: 1.05;
-}
-
-.brand-tag {
-  font-size: 12px;
-  margin-top: 2px;
-}
+/* Components are defined below in a consolidated Tailwind @layer components block. */
 
 /* Topbar (AppTopbar) */
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  backdrop-filter: blur(12px);
-  background: rgba(255, 224, 228, 0.72);
-  border-bottom: 1px solid rgba(20, 12, 10, 0.1);
-}
-
-.topbar-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 12px 0;
-}
-
-.topbar .left,
-.topbar .right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.topbar .center {
-  display: none;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-}
-
-@media (min-width: 860px) {
-  .topbar .center {
-    display: flex;
-  }
-}
-
-/* Sidebar (AppSidebar) */
-.sidebar {
-  align-self: start;
-}
-
-.sidebar.is-sticky {
-  position: sticky;
-  top: 72px;
-}
-
-.sidebar.is-fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 280px;
-  padding: 14px;
-  z-index: 60;
-  overflow: auto;
-}
-
-.side-card {
-  height: 100%;
-  min-height: calc(100vh - 28px);
-  background: rgba(255, 255, 255, 0.74);
-  border: 1px solid rgba(20, 12, 10, 0.1);
-  border-radius: 22px;
-  box-shadow: 0 22px 70px rgba(20, 12, 10, 0.06);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar .brand {
-  padding: 14px 14px 10px;
-  border-bottom: 1px solid rgba(20, 12, 10, 0.08);
-  min-width: 0;
-}
-
-.sidebar .nav {
-  padding: 12px;
-  display: grid;
-  gap: 10px;
-  flex: 1;
-  align-content: start;
-}
-
-.sidebar .link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 16px;
-  text-decoration: none;
-  color: rgba(20, 12, 10, 0.86);
-  border: 1px solid rgba(20, 12, 10, 0.08);
-  background: rgba(255, 255, 255, 0.7);
-  font-weight: 900;
-}
-
-.sidebar .link:hover {
-  background: rgba(255, 255, 255, 0.86);
-}
-
-.sidebar .link.router-link-active,
-.sidebar .link.router-link-exact-active {
-  background: rgba(242, 124, 134, 0.14);
-  border-color: rgba(242, 124, 134, 0.28);
-}
-
-.sidebar .dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--salmon), var(--gold));
-  box-shadow: 0 0 0 4px rgba(242, 124, 134, 0.14);
-}
-
-.sidebar .footer {
-  padding: 12px 14px 14px;
-  border-top: 1px solid rgba(20, 12, 10, 0.08);
-  color: var(--muted);
-  font-size: 12px;
-  margin-top: auto;
-}
+/* Topbar and Sidebar are centralized in the Tailwind components layer above. */
 
 /* Admin layout shared (dashboard/products/orders) */
 .admin-page {
@@ -412,12 +184,489 @@ body {
   border-top: 1px solid rgba(20, 12, 10, 0.08);
 }
 
-.page-actions {
-  display: inline-flex;
-  align-items: center;
+.page-actions { /* layout only; pagination styles centralized */ }
+
+.page-num {
+  padding: 0 14px;
+}
+
+.page-btn:disabled,
+.page-num:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.page-num.active {
+  background: rgba(242, 124, 134, 0.14);
+  border-color: rgba(242, 124, 134, 0.28);
+  color: rgba(20, 12, 10, 0.92);
+}
+
+.page-num.ellipsis {
+  background: transparent;
+  border-color: transparent;
+  min-width: 24px;
+  padding: 0 6px;
+  cursor: default;
+}
+
+/* Generic modal (products/orders) */
+.modal, .viewer { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 18px }
+
+.modal-panel { width: min(560px, 96vw) }
+
+.form {
+  margin-top: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.field {
+  display: grid;
   gap: 8px;
 }
 
+.label {
+  font-size: 12px;
+  font-weight: 900;
+  color: rgba(20, 12, 10, 0.72);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(20, 12, 10, 0.14);
+  background: rgba(255, 255, 255, 0.92);
+  color: rgba(20, 12, 10, 0.9);
+  outline: none;
+  transition: box-shadow 0.12s ease, border-color 0.12s ease;
+  padding: 10px 12px;
+}
+
+.input { /* base input styles centralized in @layer components; keep page-specific focus overrides if needed */ }
+
+.textarea {
+  resize: vertical;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: rgba(242, 124, 134, 0.9);
+  box-shadow: 0 0 0 4px rgba(242, 124, 134, 0.14);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 980px) {
+  .center {
+    justify-items: start;
+  }
+}
+
+/* ---- Migrated page-scoped styles: dashboard.vue ---- */
+.shell {
+  min-height: 100vh;
+}
+
+.main {
+  min-height: 100vh;
+}
+
+.brand, .brand-logo, .brand-name, .brand-tag { /* Use centralized component mapping in @layer components */ }
+
+.top-actions { /* centralized in @layer components */ }
+.content { /* centralized in @layer components */ }
+
+.side {
+  display: none;
+}
+
+.side-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.side-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  border: 1px solid rgba(20, 12, 10, 0.12);
+  background: rgba(255, 245, 247, 0.9);
+}
+
+.side-name {
+  font-weight: 950;
+  line-height: 1.05;
+}
+
+.grid {
+  display: grid;
+  gap: 14px;
+}
+
+.kpis {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.two {
+  grid-template-columns: 1.25fr 0.75fr;
+}
+
+.kpi-k {
+  font-weight: 950;
+  letter-spacing: -0.01em;
+}
+
+.kpi-v {
+  margin-top: 8px;
+  font-size: 34px;
+  font-weight: 950;
+  letter-spacing: -0.03em;
+}
+
+.kpi-sub {
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.kpi-accent {
+  background: radial-gradient(900px 350px at 20% 10%, rgba(242, 124, 134, 0.22), transparent 55%),
+    radial-gradient(700px 320px at 85% 70%, rgba(214, 166, 74, 0.18), transparent 60%),
+    rgba(255, 255, 255, 0.78);
+}
+
+@media (min-width: 860px) {
+  .hero-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .how-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .contact {
+    grid-template-columns: 1.3fr 0.9fr;
+    align-items: start;
+  }
+
+  .footer-wrap {
+    grid-template-columns: auto 1fr auto;
+    justify-content: space-between;
+  }
+}
+
+/* ---- End dashboard.vue styles ---- */
+
+/* ---- Migrated page-scoped styles: orders.vue ---- */
+.top-actions { /* centralized in @layer components */ }
+.content { /* centralized in @layer components */ }
+
+.grid {
+  display: grid;
+  gap: 14px;
+}
+
+.kpis {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.kpi-k {
+  font-weight: 950;
+  letter-spacing: -0.01em;
+}
+
+.kpi-v {
+  margin-top: 8px;
+  font-size: 34px;
+  font-weight: 950;
+  letter-spacing: -0.03em;
+}
+
+.kpi-sub {
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.kpi-accent {
+  background: radial-gradient(900px 350px at 20% 10%, rgba(242, 124, 134, 0.22), transparent 55%),
+    radial-gradient(700px 320px at 85% 70%, rgba(214, 166, 74, 0.18), transparent 60%),
+    rgba(255, 255, 255, 0.78);
+}
+
+.t-head,
+.t-row {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 0.7fr 0.55fr 0.55fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.t-head {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 950;
+}
+
+.t-row {
+  text-align: left;
+  width: 100%;
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(20, 12, 10, 0.08);
+  background: rgba(255, 255, 255, 0.74);
+  cursor: pointer;
+}
+
+.t-row:hover {
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.cell {
+  min-width: 0;
+}
+
+.id {
+  font-weight: 950;
+}
+
+.strong {
+  font-weight: 950;
+}
+
+.sub {
+  margin-top: 2px;
+  font-size: 12px;
+}
+
+.center {
+  display: grid;
+  justify-items: center;
+}
+
+.check input {
+  width: 16px;
+  height: 16px;
+  accent-color: rgb(242, 124, 134);
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.modal-backdrop, .modal-panel { /* use centralized modal components in @layer components */ }
+
+.modal-close, .modal-inner, .modal-title { /* centralized in @layer components */ }
+
+.form {
+  margin-top: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 900;
+  color: rgba(20, 12, 10, 0.72);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.input { /* base input styles centralized in @layer components */ }
+
+.check-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 950;
+  color: rgba(20, 12, 10, 0.74);
+}
+
+.check-row input {
+  width: 16px;
+  height: 16px;
+  accent-color: rgb(242, 124, 134);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.detail-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.detail {
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(20, 12, 10, 0.1);
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.val {
+  margin-top: 6px;
+  font-weight: 950;
+}
+
+.side {
+  display: none;
+}
+
+.side-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.side-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  border: 1px solid rgba(20, 12, 10, 0.12);
+  background: rgba(255, 245, 247, 0.9);
+}
+
+.side-name {
+  font-weight: 950;
+  line-height: 1.05;
+}
+
+@media (max-width: 980px) {
+  .kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .t-head,
+  .t-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .right {
+    text-align: left;
+  }
+
+  .center {
+    justify-items: start;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 980px) {
+  .side {
+    display: block;
+  }
+
+  .main {
+    margin-left: 280px;
+  }
+}
+
+/* ---- End orders.vue styles ---- */
+
+/* ---- Migrated page-scoped styles: products.vue ---- */
+.brand, .brand-logo, .brand-name, .brand-tag { /* centralized in @layer components */ }
+
+.top-actions { /* centralized in @layer components */ }
+.content { /* centralized in @layer components */ }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(20, 12, 10, 0.08);
+  flex-wrap: wrap;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.table {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.rows {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(20, 12, 10, 0.04);
+  border: 1px solid rgba(20, 12, 10, 0.08);
+}
+
+.rows-label {
+  font-weight: 950;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rows-select {
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid rgba(20, 12, 10, 0.12);
+  background: rgba(255, 255, 255, 0.86);
+  padding: 0 10px;
+  font-weight: 950;
+  color: rgba(20, 12, 10, 0.86);
+  outline: none;
+}
+
+.pager {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  border-top: 1px solid rgba(20, 12, 10, 0.08);
+}
+
+.page-actions { /* layout only; pagination styles centralized */ }
 .page-btn,
 .page-num {
   height: 38px;
@@ -455,41 +704,155 @@ body {
   cursor: default;
 }
 
-/* Generic modal (products/orders) */
-.modal,
-.viewer {
-  position: fixed;
-  inset: 0;
-  z-index: 90;
+.strong {
+  font-weight: 950;
+}
+
+.t-head,
+.t-row {
+  display: grid;
+  grid-template-columns: 1.6fr 0.6fr 0.7fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.t-head {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 950;
+}
+
+.t-row {
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(20, 12, 10, 0.08);
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.prod {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-width: 0;
+}
+
+.thumb-btn {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.thumb {
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 1px solid rgba(20, 12, 10, 0.12);
+  background: rgba(255, 245, 247, 0.9);
+}
+
+.prod-text {
+  min-width: 0;
+}
+
+.prod-name {
+  font-weight: 950;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prod-desc {
+  margin-top: 2px;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.price {
+  font-weight: 950;
+}
+
+.toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: rgb(242, 124, 134);
+}
+
+.toggle-ui {
+  display: none;
+}
+
+.upload {
+  display: grid;
+  gap: 10px;
+}
+
+.file {
+  width: 100%;
+}
+
+.preview {
+  border-radius: 18px;
+  border: 1px dashed rgba(20, 12, 10, 0.18);
+  background: rgba(255, 245, 247, 0.8);
+  padding: 12px;
   display: grid;
   place-items: center;
-  padding: 18px;
 }
 
-.modal-backdrop,
-.viewer-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(20, 12, 10, 0.36);
-  backdrop-filter: blur(10px);
+.preview-img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid rgba(20, 12, 10, 0.12);
 }
 
-.modal-panel,
+.preview-empty {
+  font-weight: 850;
+  font-size: 13px;
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 900;
+  color: rgba(20, 12, 10, 0.72);
+}
+
+.check input {
+  width: 16px;
+  height: 16px;
+  accent-color: rgb(242, 124, 134);
+}
+
+/* Viewer */
 .viewer-panel {
   position: relative;
   z-index: 2;
+  width: min(920px, 96vw);
   border-radius: 22px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.45);
   box-shadow: 0 40px 120px rgba(20, 12, 10, 0.45);
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 14px;
+  display: grid;
+  gap: 10px;
 }
 
-.modal-panel {
-  width: min(560px, 96vw);
-}
-
-.modal-close,
 .viewer-close {
   position: absolute;
   top: 12px;
@@ -506,18 +869,210 @@ body {
   line-height: 1;
 }
 
-.modal-inner {
-  padding: 18px;
+.viewer-img {
+  width: 100%;
+  max-height: min(70vh, 720px);
+  object-fit: contain;
+  border-radius: 18px;
+  border: 1px solid rgba(20, 12, 10, 0.12);
+  background: rgba(255, 245, 247, 0.7);
 }
 
-.modal-title {
+.viewer-caption {
+  text-align: center;
   font-weight: 950;
-  font-size: 18px;
-  letter-spacing: -0.01em;
+  color: rgba(20, 12, 10, 0.78);
+}
+
+.side-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.side-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  border: 1px solid rgba(20, 12, 10, 0.12);
+  background: rgba(255, 245, 247, 0.9);
+}
+
+.side-name {
+  font-weight: 950;
+  line-height: 1.05;
+}
+
+/* ---- End products.vue styles ---- */
+
+/* ---- Migrated page-scoped styles: login.vue ---- */
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: radial-gradient(1200px 600px at 20% 10%, rgba(250, 128, 114, 0.24), transparent 55%),
+    radial-gradient(900px 500px at 80% 90%, rgba(214, 166, 74, 0.18), transparent 55%),
+    linear-gradient(180deg, rgba(255, 239, 242, 1), rgba(255, 248, 250, 1));
+  color: rgba(20, 12, 10, 0.92);
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 12, 10, 0.35);
+  backdrop-filter: blur(10px);
+}
+
+.modal {
+  position: relative;
+  z-index: 2;
+  width: min(980px, 96vw);
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 40px 120px rgba(20, 12, 10, 0.45);
+  overflow: hidden;
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 4;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  color: rgba(20, 12, 10, 0.8);
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(20, 12, 10, 0.12);
+}
+
+.close span {
+  font-size: 22px;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+.modal-inner {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  min-height: 560px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.panel {
+  position: relative;
+}
+
+.left {
+  padding: 34px 34px 28px;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.right {
+  background: linear-gradient(135deg, rgba(250, 128, 114, 1), rgba(214, 166, 74, 0.92));
+  color: rgba(255, 255, 255, 0.95);
+  overflow: hidden;
+}
+
+.right::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.16), transparent 42%),
+    radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.12), transparent 46%),
+    radial-gradient(circle at 65% 85%, rgba(255, 255, 255, 0.1), transparent 48%);
+  opacity: 0.9;
+}
+
+.right-glow {
+  position: absolute;
+  inset: -80px;
+  background: radial-gradient(closest-side at 50% 30%, rgba(255, 255, 255, 0.18), transparent 62%);
+  filter: blur(10px);
+  opacity: 0.9;
+}
+
+.right-content {
+  position: relative;
+  height: 100%;
+  padding: 34px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.right-logo {
+  width: min(320px, 72%);
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 40px rgba(20, 12, 10, 0.35));
+}
+
+.right-title {
+  font-weight: 950;
+  letter-spacing: -0.02em;
+  font-size: 22px;
+}
+
+.right-sub {
+  opacity: 0.92;
+  font-size: 14px;
+}
+
+.brand, .brand-logo, .brand-name { /* centralized in @layer components */ }
+
+.brand-tag { /* centralized in @layer components */ }
+
+.title {
+  margin-top: 20px;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  font-weight: 950;
+}
+
+.sub {
+  margin-top: 6px;
+  color: rgba(20, 12, 10, 0.62);
+  font-size: 14px;
+}
+
+.social {
+  margin-top: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.btn, .social-btn, .social-ico { /* use centralized component mappings in @layer components */ }
+
+.divider {
+  margin: 18px 0 12px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.divider-line {
+  height: 1px;
+  background: rgba(20, 12, 10, 0.12);
+}
+
+.divider-text {
+  font-size: 12px;
+  font-weight: 850;
+  color: rgba(20, 12, 10, 0.58);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 .form {
-  margin-top: 14px;
   display: grid;
   gap: 12px;
 }
@@ -535,42 +1090,441 @@ body {
   text-transform: uppercase;
 }
 
-.input,
-.textarea {
-  width: 100%;
+.input-wrap {
+  position: relative;
+}
+
+.input { /* base input styles centralized in @layer components; keep page-specific focus overrides if needed */ }
+
+.ghost {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(20, 12, 10, 0.12);
+  background: rgba(255, 255, 255, 0.7);
+  font-weight: 900;
+  color: rgba(20, 12, 10, 0.72);
+  cursor: pointer;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  color: rgba(20, 12, 10, 0.7);
+  font-size: 13px;
+}
+
+.check input {
+  width: 16px;
+  height: 16px;
+  accent-color: rgb(250, 128, 114);
+}
+
+.link {
+  font-size: 13px;
+  font-weight: 900;
+  color: rgba(250, 128, 114, 0.98);
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.primary {
+  margin-top: 2px;
+  background: linear-gradient(135deg, rgba(250, 128, 114, 1), rgba(214, 166, 74, 1));
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 20px 40px rgba(250, 128, 114, 0.22);
+}
+
+.legal {
+  margin-top: 16px;
+  font-size: 12px;
+  color: rgba(20, 12, 10, 0.42);
+}
+
+@media (max-width: 860px) {
+  .modal-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .right {
+    min-height: 240px;
+  }
+
+  .left {
+    padding: 26px 20px 22px;
+  }
+
+  .right-content {
+    padding: 26px 20px;
+  }
+}
+
+/* ---- End login.vue styles ---- */
+
+/* ---- Migrated page-scoped styles: dashboard.vue (additional) ---- */
+.shell {
+  min-height: 100vh;
+}
+
+.main {
+  min-height: 100vh;
+}
+
+.brand, .brand-logo, .brand-name, .brand-tag { /* centralized in @layer components */ }
+
+.top-actions { /* centralized in @layer components */ }
+.content { /* centralized in @layer components */ }
+
+.side {
+  display: none;
+}
+
+.side-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.side-logo {
+  width: 38px;
+  height: 38px;
   border-radius: 14px;
-  border: 1px solid rgba(20, 12, 10, 0.14);
-  background: rgba(255, 255, 255, 0.92);
-  color: rgba(20, 12, 10, 0.9);
-  outline: none;
-  transition: box-shadow 0.12s ease, border-color 0.12s ease;
+  border: 1px solid rgba(20, 12, 10, 0.12);
+  background: rgba(255, 245, 247, 0.9);
+}
+
+.side-name {
+  font-weight: 950;
+  line-height: 1.05;
+}
+
+.grid {
+  display: grid;
+  gap: 14px;
+}
+
+.kpis {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.two {
+  grid-template-columns: 1.25fr 0.75fr;
+}
+
+.kpi-k {
+  font-weight: 950;
+  letter-spacing: -0.01em;
+}
+
+.kpi-v {
+  margin-top: 8px;
+  font-size: 34px;
+  font-weight: 950;
+  letter-spacing: -0.03em;
+}
+
+.kpi-sub {
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.kpi-accent {
+  background: radial-gradient(900px 350px at 20% 10%, rgba(242, 124, 134, 0.22), transparent 55%),
+    radial-gradient(700px 320px at 85% 70%, rgba(214, 166, 74, 0.18), transparent 60%),
+    rgba(255, 255, 255, 0.78);
+}
+
+.sales-card .card-inner {
+  padding: 18px;
+}
+
+.sales-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.section-title {
+  font-weight: 950;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+}
+
+.seg {
+  display: inline-flex;
+  padding: 5px;
+  border-radius: 999px;
+  background: rgba(20, 12, 10, 0.05);
+  border: 1px solid rgba(20, 12, 10, 0.08);
+  gap: 6px;
+}
+
+.seg-btn {
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-weight: 950;
+  color: rgba(20, 12, 10, 0.7);
+  cursor: pointer;
+}
+
+.seg-btn.active {
+  background: rgba(255, 255, 255, 0.86);
+  border-color: rgba(20, 12, 10, 0.12);
+  color: rgba(20, 12, 10, 0.92);
+}
+
+.sales-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1.35fr 0.65fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.bars {
+  display: grid;
+  gap: 10px;
+}
+
+.bar-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.bar-label {
+  font-weight: 950;
+  font-size: 13px;
+}
+
+.bar-track {
+  margin-top: 8px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(20, 12, 10, 0.08);
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(242, 124, 134, 1), rgba(214, 166, 74, 1));
+  box-shadow: 0 8px 20px rgba(242, 124, 134, 0.14);
+}
+
+.sales-summary {
+  display: grid;
+  gap: 10px;
+}
+
+.mini {
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(20, 12, 10, 0.1);
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.mini-v {
+  margin-top: 6px;
+  font-weight: 950;
+  font-size: 18px;
+}
+
+.note {
+  margin-top: 4px;
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(242, 124, 134, 0.08);
+  border: 1px solid rgba(214, 166, 74, 0.18);
+}
+
+.note-title {
+  font-weight: 950;
+  margin-bottom: 4px;
+}
+
+.table {
+  margin-top: 12px;
+  display: grid;
+  gap: 8px;
+}
+
+.t-head,
+.t-row {
+  display: grid;
+  grid-template-columns: 0.7fr 0.9fr 1.4fr 0.9fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.t-head {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 950;
+}
+
+.t-row {
   padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(20, 12, 10, 0.08);
+  background: rgba(255, 255, 255, 0.74);
 }
 
-.input {
-  height: 44px;
+.right {
+  text-align: right;
 }
 
-.textarea {
-  resize: vertical;
+.pill {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-weight: 950;
+  font-size: 12px;
+  border: 1px solid rgba(20, 12, 10, 0.12);
 }
 
-.input:focus,
-.textarea:focus {
-  border-color: rgba(242, 124, 134, 0.9);
-  box-shadow: 0 0 0 4px rgba(242, 124, 134, 0.14);
+.pill.completed {
+  background: rgba(214, 166, 74, 0.18);
+  border-color: rgba(214, 166, 74, 0.35);
+}
+
+.pill.pending {
+  background: rgba(242, 124, 134, 0.14);
+  border-color: rgba(242, 124, 134, 0.32);
 }
 
 .actions {
-  display: flex;
+  margin-top: 12px;
+  display: grid;
   gap: 10px;
-  justify-content: flex-end;
-  margin-top: 4px;
-  flex-wrap: wrap;
 }
 
 @media (max-width: 980px) {
-  .center {
-    justify-items: start;
+  .kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .sales-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .two {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- End dashboard.vue (additional) ---- */
+
+/* Centralized Tailwind component mappings (use Tailwind utilities via @apply)
+   These provide consistent, reusable component classes across pages. */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 h-10 px-4 rounded-full border border-slate-200 bg-white/90 text-sm font-semibold text-slate-900 transition-shadow;
+  }
+
+  .btn.primary,
+  .btn-primary,
+  .page-btn.primary {
+    @apply bg-gradient-to-r from-[#f27c86] to-[#d6a64a] text-slate-950 border-transparent shadow-lg;
+  }
+
+  .card {
+    @apply bg-white/80 border border-slate-200 rounded-[1.125rem] shadow-[0_18px_50px_rgba(15,23,42,0.08)] overflow-hidden;
+  }
+
+  .card-inner {
+    @apply p-4;
+  }
+
+  .brand-logo {
+    @apply w-11 h-11 rounded-xl border border-slate-200 bg-white/80 object-cover;
+  }
+
+  .topbar {
+    @apply sticky top-0 z-50 border-b border-[#f2a1aa]/40;
+    background:
+      linear-gradient(135deg, rgba(242, 124, 134, 0.24), rgba(255, 255, 255, 0.88) 34%, rgba(242, 124, 134, 0.16) 70%, rgba(214, 166, 74, 0.18)),
+      rgba(255, 248, 249, 0.9);
+    backdrop-filter: blur(16px);
+  }
+
+  .sidebar .link {
+    @apply flex items-center gap-3 px-3 py-2 rounded-lg bg-white/80 border border-slate-200 font-semibold text-slate-900;
+  }
+
+  .chip {
+    @apply inline-flex items-center h-9 px-3 rounded-full border border-slate-200 bg-white/80 text-slate-800 font-semibold;
+  }
+
+  /* Layout helpers centralized for admin pages */
+  .top-actions { @apply flex items-center gap-2 }
+  .content { @apply py-4 grid gap-3 }
+  .grid { @apply grid gap-3 }
+  .kpis { @apply grid grid-cols-3 gap-3 }
+  .kpi-k { font-weight: 950; letter-spacing: -0.01em }
+  .kpi-v { margin-top: 8px; font-size: 34px; font-weight: 950; letter-spacing: -0.03em }
+  .kpi-sub { margin-top: 6px; font-size: 13px }
+  .kpi-accent { background: radial-gradient(900px 350px at 20% 10%, rgba(242,124,134,0.22), transparent 55%), radial-gradient(700px 320px at 85% 70%, rgba(214,166,74,0.18), transparent 60%), rgba(255,255,255,0.78) }
+
+  /* Table helpers (rows/heads share base styles, columns kept page-specific) */
+  .t-head, .t-row { @apply grid gap-3 items-center }
+  .t-head { @apply text-xs uppercase font-extrabold tracking-wider }
+  .t-row { @apply p-3 rounded-lg border bg-white/72 border-slate-200 }
+  .t-row:hover { @apply bg-white/90 }
+
+  .modal-panel,
+  .viewer-panel {
+    @apply rounded-[1.25rem] bg-white/95 border border-white/40 shadow-[0_40px_120px_rgba(15,23,42,0.45)];
+  }
+
+  .modal-backdrop,
+  .viewer-backdrop {
+    @apply fixed inset-0 bg-slate-900/40 backdrop-blur-sm;
+  }
+
+  .modal-close,
+  .viewer-close {
+    @apply absolute top-3 right-3 w-10 h-10 rounded-full grid place-items-center border border-slate-200 bg-white/90 text-slate-800 text-lg;
+  }
+
+  .modal-inner {
+    @apply p-4;
+  }
+
+  .modal-title { @apply font-extrabold text-lg }
+
+  .page-btn,
+  .page-num {
+    @apply h-9 min-w-[38px] px-3 rounded-lg border border-slate-200 bg-white/80 font-semibold text-slate-800;
+  }
+
+  .input,
+  .textarea {
+    @apply w-full rounded-lg border border-slate-200 bg-white/90 p-2 outline-none transition;
   }
 }
