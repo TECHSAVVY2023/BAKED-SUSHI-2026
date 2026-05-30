@@ -45,6 +45,78 @@ body {
   display: none;
 }
 
+.sidebar {
+  color: rgba(20, 12, 10, 0.88);
+}
+
+.sidebar.is-fixed {
+  position: fixed;
+  inset: 16px auto 16px 16px;
+  z-index: 70;
+  width: 248px;
+}
+
+.sidebar.is-sticky {
+  position: sticky;
+  top: 16px;
+  width: 248px;
+  height: calc(100vh - 32px);
+}
+
+.side-card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(242, 161, 170, 0.34);
+  border-radius: 24px;
+  background:
+    radial-gradient(420px 220px at 20% 0%, rgba(242, 124, 134, 0.16), transparent 58%),
+    linear-gradient(180deg, rgba(255, 250, 251, 0.94), rgba(255, 244, 246, 0.86));
+  box-shadow: 0 24px 70px rgba(20, 12, 10, 0.1);
+  backdrop-filter: blur(18px);
+}
+
+.side-card .brand {
+  padding: 18px;
+  border-bottom: 1px solid rgba(20, 12, 10, 0.08);
+}
+
+.sidebar .nav {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+}
+
+.sidebar .dot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: rgba(242, 124, 134, 0.38);
+  box-shadow: 0 0 0 4px rgba(242, 124, 134, 0.08);
+}
+
+.sidebar .label {
+  min-width: 0;
+}
+
+.sidebar .link.router-link-active,
+.sidebar .link.router-link-exact-active {
+  border-color: rgba(242, 124, 134, 0.34);
+  background: linear-gradient(135deg, rgba(242, 124, 134, 0.2), rgba(214, 166, 74, 0.18));
+}
+
+.side-card .footer {
+  margin-top: auto;
+  padding: 16px 18px 18px;
+  border-top: 1px solid rgba(20, 12, 10, 0.08);
+  color: rgba(20, 12, 10, 0.58);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
 @media (min-width: 980px) {
   .side {
     display: block;

@@ -221,7 +221,6 @@
             <div class="mt-8 overflow-hidden rounded-[1.25rem] border border-[#f2c0c7] bg-[rgba(255,248,249,0.88)] p-4">
               <div class="mb-3 flex items-center justify-between gap-3">
                 <div class="font-black text-slate-900">Product Preview</div>
-                <div class="text-xs uppercase tracking-[0.18em] text-[#c96b76]">Slides left</div>
               </div>
 
               <div class="product-marquee">
@@ -242,89 +241,165 @@
         </div>
       </section>
 
-      <section id="menu" class="py-20">
+      <section id="menu" class="bg-white py-16 sm:py-20">
         <div class="mx-auto max-w-7xl px-4 sm:px-6">
-          <div class="mb-8 flex flex-col gap-4 rounded-[1.25rem] bg-white/80 p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] sm:flex-row sm:items-end sm:justify-between">
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <div class="flex flex-wrap items-center gap-3 text-3xl font-black tracking-tight sm:text-4xl">
-                <span>Our Menu</span>
-                <span class="text-[#f27c86]">♥</span>
-              </div>
-              <p class="mt-3 max-w-2xl text-sm text-slate-600">
-                Tap “Add” to build your order. You can edit prices/items later.
-              </p>
+              <h2 class="text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">Menu by category</h2>
+              <div class="mt-6 h-px w-full max-w-6xl bg-[#f27c86]"></div>
             </div>
-            <button class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white/90 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-white shadow-sm" type="button" @click="cartOpen = true">Review Cart</button>
-          </div>
-
-          <div class="mb-6 flex flex-wrap gap-3 overflow-x-auto pb-2">
-            <button
-              v-for="option in menuFilterOptions"
-              :key="option.key"
-              class="inline-flex items-center gap-3 rounded-xl border px-4 py-2 text-sm font-semibold transition"
-              :class="selectedMenuFilter === option.key
-                ? 'border-[#f2a1aa] bg-[#fff1f3] text-slate-900 shadow-sm'
-                : 'border-slate-200 bg-white/80 text-slate-700 hover:bg-slate-50'"
-              type="button"
-              @click="selectedMenuFilter = option.key"
-            >
-              {{ option.label }}
-              <span
-                class="inline-flex min-w-[22px] items-center justify-center rounded-xl px-2 text-xs font-semibold"
-                :class="selectedMenuFilter === option.key ? 'bg-[#f7c4ca]/50 text-[#9d4b56]' : 'bg-slate-200/70 text-slate-700'"
-              >
-                {{ option.count }}
-              </span>
+            <button class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-[#f27c86]" type="button" @click="cartOpen = true">
+              Review Cart
             </button>
           </div>
 
-          <div class="space-y-4">
-            <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div class="mt-10 flex gap-6 overflow-x-auto pb-4 sm:justify-center lg:gap-10">
+            <button
+              v-for="option in menuFilterOptions"
+              :key="option.key"
+              class="group grid min-w-[116px] place-items-center gap-4 text-center outline-none"
+              type="button"
+              @click="selectMenuCategory(option.key)"
+            >
+              <span
+                class="grid h-28 w-28 place-items-center rounded-full border-2 transition duration-200 group-hover:-translate-y-2 group-focus-visible:-translate-y-2"
+                :class="selectedMenuFilter === option.key
+                  ? 'border-[#172554] bg-[#ffd166] shadow-[0_18px_34px_rgba(23,37,84,0.22)]'
+                  : 'border-transparent bg-[#f19581] shadow-[0_14px_32px_rgba(242,124,134,0.12)] group-hover:border-[#172554] group-hover:bg-[#ffd166] group-hover:shadow-[0_18px_34px_rgba(23,37,84,0.18)] group-focus-visible:border-[#172554] group-focus-visible:bg-[#ffd166]'"
+              >
+                <svg v-if="option.key === 'All Products'" class="h-16 w-16 text-[#172554]" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+                  <path d="M14 20h36l-4 30H18L14 20Z" fill="#f8df7c" stroke="currentColor" stroke-width="3" />
+                  <path d="M19 14h26l5 6H14l5-6Z" fill="#f27c86" stroke="currentColor" stroke-width="3" />
+                  <path d="M23 30h18M22 39h16" stroke="#172554" stroke-width="3" stroke-linecap="round" />
+                </svg>
+                <svg v-else-if="option.key === 'Large Portion Servings'" class="h-16 w-16 text-[#172554]" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+                  <ellipse cx="32" cy="34" rx="24" ry="16" fill="#f8fafc" stroke="currentColor" stroke-width="3" />
+                  <circle cx="22" cy="31" r="5" fill="#fff7ed" stroke="currentColor" stroke-width="3" />
+                  <circle cx="34" cy="27" r="5" fill="#fff7ed" stroke="currentColor" stroke-width="3" />
+                  <circle cx="43" cy="36" r="5" fill="#fff7ed" stroke="currentColor" stroke-width="3" />
+                  <path d="M18 39c8 4 19 5 30 0" stroke="#f27c86" stroke-width="4" stroke-linecap="round" />
+                  <path d="M25 31h15M28 40h12" stroke="#172554" stroke-width="2.5" stroke-linecap="round" />
+                </svg>
+                <svg v-else-if="option.key === 'Rolls and Salad'" class="h-16 w-16 text-[#172554]" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+                  <path d="M14 37c4 11 32 11 36 0l-4 12H18l-4-12Z" fill="#f8fafc" stroke="currentColor" stroke-width="3" />
+                  <path d="M16 35c3-8 11-14 20-12 7 1 11 5 13 12" fill="#bbf7d0" />
+                  <path d="M20 32c4-5 8-7 13-5M32 29c6-4 11-3 15 4" stroke="#166534" stroke-width="3" stroke-linecap="round" />
+                  <path d="M26 38l8-12 9 14" stroke="#f27c86" stroke-width="4" stroke-linecap="round" />
+                  <circle cx="24" cy="39" r="3" fill="#dc2626" />
+                  <circle cx="42" cy="37" r="3" fill="#dc2626" />
+                </svg>
+                <svg v-else class="h-16 w-16 text-[#172554]" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+                  <path d="M13 36h38l-5 15H18l-5-15Z" fill="#f8fafc" stroke="currentColor" stroke-width="3" />
+                  <path d="M19 33c4-8 21-8 26 0" fill="#fde68a" stroke="currentColor" stroke-width="3" />
+                  <path d="M23 28c0-5 4-9 9-9s9 4 9 9" stroke="#f27c86" stroke-width="4" stroke-linecap="round" />
+                  <path d="M28 23h8M25 35h15" stroke="#172554" stroke-width="3" stroke-linecap="round" />
+                </svg>
+              </span>
+              <span class="grid gap-2 text-base font-black text-slate-950 sm:text-lg">
+                {{ option.label }}
+                <span
+                  class="mx-auto h-1 w-10 rounded-full transition"
+                  :class="selectedMenuFilter === option.key
+                    ? 'bg-[#172554] opacity-100'
+                    : 'bg-[#f27c86] opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100'"
+                  aria-hidden="true"
+                ></span>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-16 bg-[#f6f3ef] py-12 sm:py-14">
+          <div class="mx-auto max-w-7xl px-4 sm:px-6">
+            <div class="flex items-center justify-between gap-4">
               <div>
-                <h3 class="text-lg font-black tracking-tight">{{ selectedMenuLabel }}</h3>
-                <div class="text-sm text-slate-600">{{ filteredMenu.length }} item(s)</div>
+                <h2 class="text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">Our Favourites</h2>
+                <div class="mt-6 h-px w-full bg-[#f27c86]"></div>
+              </div>
+              <div class="hidden items-center gap-3 text-slate-700 sm:flex" aria-hidden="true">
+                <button class="grid h-10 w-10 place-items-center rounded-full border border-transparent transition hover:border-slate-300" type="button" @click="selectMenuCategory('All Products')">
+                  <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6" /></svg>
+                </button>
+                <button class="grid h-10 w-10 place-items-center rounded-full border border-transparent transition hover:border-slate-300" type="button" @click="scrollTo('menu-list')">
+                  <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" /></svg>
+                </button>
               </div>
             </div>
 
-            <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <div class="mt-6 grid gap-4 lg:grid-cols-2">
               <article
-                v-for="item in filteredMenu"
-                :key="item.id"
-                class="flex h-full flex-col overflow-hidden rounded-[1.125rem] border border-slate-200 bg-white/80 shadow-[0_18px_50px_rgba(15,23,42,0.08)]"
+                v-for="(item, index) in favoriteMenu"
+                :key="`favorite-${item.id}`"
+                class="grid overflow-hidden rounded-md bg-white shadow-sm sm:grid-cols-[1fr_1fr]"
               >
-                <div class="relative aspect-[16/10] bg-slate-100/80">
-                  <div
-                    v-if="item.isBestSeller"
-                    class="absolute left-3 top-3 rounded-xl bg-slate-950 px-3 py-1 text-xs font-black text-white"
-                  >
-                    Best Seller
-                  </div>
-                  <img
-                    class="absolute inset-0 h-full w-full object-cover"
-                    :src="item.image || logo"
-                    :alt="item.name"
-                    loading="lazy"
-                  />
+                <div class="grid min-h-[190px] place-items-center" :class="index % 2 === 0 ? 'bg-[#e5d5f3]' : 'bg-[#ffe2a8]'">
+                  <img class="h-36 w-36 rounded-full object-cover shadow-[0_18px_34px_rgba(20,12,10,0.18)]" :src="item.image || logo" :alt="item.name" loading="lazy" />
                 </div>
-                <div class="flex flex-1 flex-col p-5">
-                  <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <h4 class="text-lg font-black">{{ item.name }}</h4>
-                      <p class="mt-2 min-h-[72px] text-sm leading-6 text-slate-600">{{ item.description }}</p>
-                    </div>
-                    <div class="min-w-[120px] text-right">
-                      <div class="font-black">{{ formatPeso(item.price) }}</div>
-                      <div class="mt-1 text-xs text-slate-600">{{ item.sizeLabel }}</div>
-                    </div>
-                  </div>
-
-                  <div class="mt-auto pt-4 flex flex-wrap gap-3">
-                    <button class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-gradient-to-r from-[#f27c86] to-[#d6a64a] px-5 py-2 text-sm font-semibold text-slate-950 transition hover:brightness-105 shadow-sm" type="button" @click="addToCart(item)">Add</button>
-                    <button class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white/90 px-5 py-2 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-white shadow-sm" type="button" @click="orderSingle(item)">Order this</button>
+                <div class="flex flex-col justify-center p-6">
+                  <h3 class="text-xl font-black text-slate-950">{{ item.name }}</h3>
+                  <p class="mt-3 text-base leading-7 text-slate-900">{{ item.description }}</p>
+                  <div class="mt-4 font-black text-slate-950">{{ formatPeso(item.price) }}</div>
+                  <div class="mt-5 flex flex-wrap gap-3">
+                    <button class="inline-flex items-center justify-center rounded border border-[#f27c86] px-4 py-2 text-sm font-semibold text-[#d45d6d] transition hover:bg-[#fff1f3]" type="button" @click="addToCart(item)">
+                      Add to cart
+                    </button>
+                    <button class="inline-flex items-center justify-center rounded border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-white" type="button" @click="orderSingle(item)">
+                      Order this
+                    </button>
                   </div>
                 </div>
               </article>
             </div>
+          </div>
+        </div>
+
+        <div id="menu-list" class="mx-auto mt-12 max-w-7xl px-4 sm:px-6">
+          <div class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h3 class="text-2xl font-black tracking-tight text-slate-950">{{ selectedMenuLabel }}</h3>
+              <div class="mt-1 text-sm text-slate-600">{{ filteredMenu.length }} item(s)</div>
+            </div>
+            <div class="text-sm font-semibold text-slate-600">Tap “Add” to build your order.</div>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <article
+              v-for="item in filteredMenu"
+              :key="item.id"
+              class="flex h-full flex-col overflow-hidden rounded-[1.125rem] border border-slate-200 bg-white/90 shadow-[0_18px_50px_rgba(15,23,42,0.08)]"
+            >
+              <div class="relative aspect-[16/10] bg-slate-100/80">
+                <div
+                  v-if="item.isBestSeller"
+                  class="absolute left-3 top-3 rounded-xl bg-slate-950 px-3 py-1 text-xs font-black text-white"
+                >
+                  Best Seller
+                </div>
+                <img
+                  class="absolute inset-0 h-full w-full object-cover"
+                  :src="item.image || logo"
+                  :alt="item.name"
+                  loading="lazy"
+                />
+              </div>
+              <div class="flex flex-1 flex-col p-5">
+                <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <h4 class="text-lg font-black">{{ item.name }}</h4>
+                    <p class="mt-2 min-h-[72px] text-sm leading-6 text-slate-600">{{ item.description }}</p>
+                  </div>
+                  <div class="min-w-[120px] text-right">
+                    <div class="font-black">{{ formatPeso(item.price) }}</div>
+                    <div class="mt-1 text-xs text-slate-600">{{ item.sizeLabel }}</div>
+                  </div>
+                </div>
+
+                <div class="mt-auto flex flex-wrap gap-3 pt-4">
+                  <button class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-gradient-to-r from-[#f27c86] to-[#d6a64a] px-5 py-2 text-sm font-semibold text-slate-950 shadow-sm transition hover:brightness-105" type="button" @click="addToCart(item)">Add</button>
+                  <button class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white/90 px-5 py-2 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-slate-300 hover:bg-white" type="button" @click="orderSingle(item)">Order this</button>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </section>
@@ -465,38 +540,97 @@
         </div>
       </section>
 
-      <footer class="border-t border-slate-200 bg-gradient-to-b from-white to-slate-50 py-14">
-        <div class="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-[auto_1fr_auto] lg:items-center">
-          <div class="flex items-center gap-3 text-slate-700" aria-label="Social links">
-            <a class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/80 text-slate-700 transition hover:bg-slate-50" href="https://www.facebook.com/bakedsushiOzamiz" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5" aria-hidden="true"><path d="M13.5 22v-8.3h2.8l.4-3.2h-3.2V8.5c0-.9.3-1.6 1.7-1.6h1.7V4c-.3 0-1.5-.1-2.8-.1-2.8 0-4.7 1.7-4.7 4.8v1.8H6.5v3.2h2.9V22h4.1z"/></svg>
+      <footer class="bg-black py-16 text-white sm:py-20">
+        <div class="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[1.35fr_1fr_1fr_0.85fr]">
+          <div>
+            <a
+              href="#top"
+              class="flex items-center gap-4 text-white no-underline"
+              @click.prevent="scrollTo('top')"
+            >
+              <img class="h-12 w-12 rounded-none object-cover" :src="logo" alt="Baked Sushi logo" />
+              <div class="text-2xl font-black tracking-tight sm:text-3xl">Baked Sushi</div>
             </a>
-            <a class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/80 text-slate-700 transition hover:bg-slate-50" href="#" aria-label="Instagram (update link)">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5" aria-hidden="true"><path d="M7.7 2h8.6A5.7 5.7 0 0 1 22 7.7v8.6A5.7 5.7 0 0 1 16.3 22H7.7A5.7 5.7 0 0 1 2 16.3V7.7A5.7 5.7 0 0 1 7.7 2Zm0 2A3.7 3.7 0 0 0 4 7.7v8.6A3.7 3.7 0 0 0 7.7 20h8.6A3.7 3.7 0 0 0 20 16.3V7.7A3.7 3.7 0 0 0 16.3 4H7.7Zm4.3 4.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Zm0 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3ZM17.8 6.7a.9.9 0 1 1 0 1.8.9.9 0 0 1 0-1.8Z"/></svg>
-            </a>
-            <a class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/80 text-slate-700 transition hover:bg-slate-50" href="#" aria-label="TikTok (update link)">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5" aria-hidden="true"><path d="M16.6 3c.7 1.9 2 3.2 3.9 3.7v3.2c-1.7 0-3.2-.5-4.5-1.5v6.3c0 3.6-2.9 6.5-6.5 6.5S3 18.3 3 14.7s2.9-6.5 6.5-6.5c.5 0 1 .1 1.5.2v3.5c-.4-.2-.9-.3-1.5-.3-1.7 0-3.1 1.4-3.1 3.1S7.8 17.8 9.5 17.8s3.1-1.4 3.1-3.1V3h4z"/></svg>
-            </a>
-          </div>
 
-          <div class="flex items-center gap-3">
-            <img class="h-11 w-11 rounded-2xl border border-slate-200 bg-white/80 object-cover" :src="logo" alt="Baked Sushi" />
-            <div>
-              <div class="font-black leading-tight">Baked Sushi Ozamiz</div>
-              <div class="text-sm text-slate-600">Scoop | Wrap | Munch | Repeat</div>
+            <form class="mt-8 max-w-md" @submit.prevent="noop">
+              <label class="sr-only" for="footer-email">Email for updates and newsletter</label>
+              <input
+                id="footer-email"
+                class="h-12 w-full border border-zinc-500 bg-transparent px-4 text-sm font-semibold text-white outline-none transition placeholder:text-zinc-500 focus:border-white"
+                type="email"
+                placeholder="Enter email to receive updates and newsletter"
+              />
+            </form>
+
+            <div class="mt-8 text-lg font-semibold text-zinc-300">Connect with us</div>
+            <div class="mt-6 flex flex-wrap items-center gap-4" aria-label="Social links">
+              <a class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-zinc-800 text-zinc-400 transition hover:bg-zinc-700 hover:text-white" href="https://www.facebook.com/bakedsushiOzamiz" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6" aria-hidden="true"><path d="M13.5 22v-8.3h2.8l.4-3.2h-3.2V8.5c0-.9.3-1.6 1.7-1.6h1.7V4c-.3 0-1.5-.1-2.8-.1-2.8 0-4.7 1.7-4.7 4.8v1.8H6.5v3.2h2.9V22h4.1z"/></svg>
+              </a>
+              <a class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-zinc-800 text-zinc-400 transition hover:bg-zinc-700 hover:text-white" href="#" aria-label="Instagram (update link)">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6" aria-hidden="true"><path d="M7.7 2h8.6A5.7 5.7 0 0 1 22 7.7v8.6A5.7 5.7 0 0 1 16.3 22H7.7A5.7 5.7 0 0 1 2 16.3V7.7A5.7 5.7 0 0 1 7.7 2Zm0 2A3.7 3.7 0 0 0 4 7.7v8.6A3.7 3.7 0 0 0 7.7 20h8.6A3.7 3.7 0 0 0 20 16.3V7.7A3.7 3.7 0 0 0 16.3 4H7.7Zm4.3 4.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Zm0 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3ZM17.8 6.7a.9.9 0 1 1 0 1.8.9.9 0 0 1 0-1.8Z"/></svg>
+              </a>
+              <a class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-zinc-800 text-zinc-400 transition hover:bg-zinc-700 hover:text-white" :href="smsLink" aria-label="Text Baked Sushi">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-6 w-6" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z"/></svg>
+              </a>
+              <a class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-zinc-800 text-zinc-400 transition hover:bg-zinc-700 hover:text-white" href="#menu" aria-label="View menu" @click.prevent="scrollTo('menu')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-6 w-6" aria-hidden="true"><path d="M4 7h16M7 3v4m10-4v4M6 11h12l-1 7H7l-1-7Z" /></svg>
+              </a>
             </div>
           </div>
 
-          <div class="grid gap-3 text-sm text-slate-600">
-            <div>Built for Baked Sushi, Ozamiz.</div>
-            <div class="flex flex-wrap items-center gap-2 text-slate-600">
-              <a class="hover:text-slate-900" href="#top" @click.prevent="scrollTo('top')">Back to top</a>
-              <span>•</span>
-              <a class="hover:text-slate-900" href="#menu" @click.prevent="scrollTo('menu')">Menu</a>
-              <span>•</span>
-              <a class="hover:text-slate-900" href="#contact" @click.prevent="scrollTo('contact')">Contact</a>
-            </div>
+          <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-2">
+            <nav class="grid gap-3 text-lg font-bold text-zinc-600" aria-label="Footer menu">
+              <div class="text-white">Menu</div>
+              <a class="transition hover:text-white" href="#top" @click.prevent="scrollTo('top')">Home</a>
+              <a class="transition hover:text-white" href="#menu" @click.prevent="scrollTo('menu')">All Products</a>
+              <a class="transition hover:text-white" href="#how" @click.prevent="scrollTo('how')">How to Order</a>
+              <a class="transition hover:text-white" href="#about" @click.prevent="scrollTo('about')">About</a>
+              <a class="transition hover:text-white" href="#contact" @click.prevent="scrollTo('contact')">Contact</a>
+            </nav>
+
+            <nav class="grid gap-3 text-lg font-bold text-zinc-600" aria-label="Categories">
+              <div class="text-white">Favorites</div>
+              <a
+                v-for="cat in categoryOrder"
+                :key="`footer-${cat}`"
+                class="transition hover:text-white"
+                :href="`#cat-${slug(cat)}`"
+                @click.prevent="scrollTo(`cat-${slug(cat)}`)"
+              >
+                {{ cat }}
+              </a>
+              <a class="transition hover:text-white" href="#menu" @click.prevent="scrollTo('menu')">Best Seller</a>
+              <a class="transition hover:text-white" href="#menu" @click.prevent="scrollTo('menu')">Promos</a>
+            </nav>
+
+            <nav class="grid gap-3 text-lg font-bold text-zinc-600" aria-label="Support">
+              <div class="text-white">Support</div>
+              <a class="transition hover:text-white" :href="smsLink">Order by SMS</a>
+              <a class="transition hover:text-white" href="https://www.facebook.com/bakedsushiOzamiz" target="_blank" rel="noopener noreferrer">Facebook</a>
+              <a class="transition hover:text-white" href="#" @click.prevent="noop">Instagram</a>
+              <a class="transition hover:text-white" href="#contact" @click.prevent="scrollTo('contact')">Pickup Details</a>
+              <a class="transition hover:text-white" href="#contact" @click.prevent="scrollTo('contact')">Contact</a>
+            </nav>
           </div>
+
+          <div>
+            <div class="text-lg font-bold text-zinc-300">Fresh from Ozamiz</div>
+            <div class="mt-8 w-full max-w-[220px] overflow-hidden border border-zinc-800 bg-zinc-950">
+              <img class="aspect-[4/3] w-full object-cover" :src="logo" alt="Baked Sushi tray preview" />
+            </div>
+            <p class="mt-8 max-w-[220px] text-lg font-semibold leading-tight text-zinc-300">
+              Scoop, wrap, munch, repeat. Try a tray for your next craving.
+            </p>
+            <button class="mt-4 border-b border-zinc-500 pb-1 text-lg font-bold text-zinc-200 transition hover:border-white hover:text-white" type="button" @click="quickOrder()">
+              Order now.
+            </button>
+          </div>
+        </div>
+
+        <div class="mx-auto mt-16 flex max-w-7xl flex-col gap-3 px-4 text-sm font-semibold text-zinc-700 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <div>Built for Baked Sushi, Ozamiz.</div>
+          <button class="text-left transition hover:text-white sm:text-right" type="button" @click="scrollTo('top')">Back to top</button>
         </div>
       </footer>
     </main>
@@ -735,6 +869,10 @@ const productShowcase = computed(() => [
   ...menu.map((item) => ({ ...item, trackKey: 'a' })),
   ...menu.map((item) => ({ ...item, trackKey: 'b' }))
 ])
+const favoriteMenu = computed(() => {
+  const favorites = menu.filter((item) => item.isBestSeller)
+  return [...favorites, ...menu.filter((item) => !item.isBestSeller)].slice(0, 2)
+})
 
 const cartOpen = ref(false)
 const loginOpen = ref(false)
@@ -791,6 +929,11 @@ const selectedMenuLabel = computed(() => selectedMenuFilter.value)
 function scrollTo(id: string) {
   const el = document.getElementById(id)
   el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+function selectMenuCategory(key: MenuFilter) {
+  selectedMenuFilter.value = key
+  requestAnimationFrame(() => scrollTo(key === 'All Products' ? 'menu' : 'menu-list'))
 }
 
 function noop() {}
