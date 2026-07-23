@@ -1,10 +1,24 @@
 from rest_framework import serializers
-from .models import ContactListModel
+from .models import ContactListModel, Product, Order
+
 
 class ContactListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactListModel
         fields = '__all__'
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = '__all__'
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = '__all__'
+
 
 def filter_heic_files(images):
     """Filter out .heic files from images array"""

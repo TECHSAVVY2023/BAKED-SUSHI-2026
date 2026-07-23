@@ -7,28 +7,25 @@
             <img class="side-logo" :src="logo" alt="Baked Sushi logo" />
             <div>
               <div class="side-name">Baked Sushi</div>
-              <div class="muted" style="font-size: 12px">Admin</div>
+              <div class="text-[11px] font-semibold text-slate-400">Admin Panel</div>
             </div>
           </div>
         </template>
-        <template #footer>Tip: Orders here are mock-only.</template>
+        <template #footer>Connected to Backend API</template>
       </AppSidebar>
 
       <div class="main">
         <AppTopbar>
           <template #left>
-            <div class="brand">
-              <img class="brand-logo" :src="logo" alt="Baked Sushi logo" />
-              <div>
-                <div class="brand-name">Orders</div>
-                <div class="brand-tag muted">Track completed and pending orders</div>
-              </div>
+            <div>
+              <h1 class="page-title">Orders</h1>
+              <p class="page-subtitle">Track completed and pending orders</p>
             </div>
           </template>
 
           <template #right>
             <div class="top-actions">
-              <button class="btn" type="button" @click="refreshMock">Refresh mock</button>
+              <button class="btn" type="button" @click="fetchOrders">Refresh</button>
               <button class="btn primary" type="button" @click="openCreate">Create order</button>
             </div>
           </template>
@@ -54,7 +51,7 @@
               <div class="card-inner">
                 <div class="kpi-k">Sales (all)</div>
                 <div class="kpi-v">{{ formatPeso(totalSales) }}</div>
-                <div class="kpi-sub">Mock totals</div>
+                <div class="kpi-sub">Total sales</div>
               </div>
             </article>
           </section>
@@ -64,8 +61,8 @@
               <div class="toolbar">
                 <div class="toolbar-left">
                   <div class="rows">
-                    <div class="rows-label muted">Rows</div>
-                    <select v-model.number="pageSize" class="rows-select" aria-label="Rows per page">
+                    <div class="rows-label muted text-xs font-medium">Rows</div>
+                    <select v-model.number="pageSize" class="rows-select text-xs font-semibold rounded-lg border border-slate-200 px-2 py-1 bg-white" aria-label="Rows per page">
                       <option v-for="n in pageSizes" :key="n" :value="n">{{ n }}</option>
                     </select>
                   </div>
@@ -84,13 +81,10 @@
                   </div>
                 </div>
 
-                <div class="search">
-                  <span class="search-ico" aria-hidden="true">
-                    <svg viewBox="0 0 24 24">
-                      <path
-                        d="M10.5 3a7.5 7.5 0 1 0 4.6 13.4l4 4a1 1 0 0 0 1.4-1.4l-4-4A7.5 7.5 0 0 0 10.5 3Zm0 2a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11Z"
-                        fill="currentColor"
-                      />
+                <div class="search relative">
+                  <span class="search-ico absolute left-3 top-2.5 text-slate-400 pointer-events-none" aria-hidden="true">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M10.5 3a7.5 7.5 0 1 0 4.6 13.4l4 4a1 1 0 0 0 1.4-1.4l-4-4A7.5 7.5 0 0 0 10.5 3Zm0 2a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11Z" />
                     </svg>
                   </span>
                   <input
@@ -103,7 +97,18 @@
                 </div>
               </div>
 
-              <div class="table">
+              <div v-if="loading" class="text-slate-500 text-xs p-8 text-center">Loading orders...</div>
+              <div v-else-if="error" class="p-8 text-center bg-slate-50/50 border border-slate-100 rounded-xl my-4">
+                <div class="w-10 h-10 mx-auto rounded-full bg-rose-50 text-rose-500 flex items-center justify-center mb-3">
+                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                </div>
+                <div class="text-sm font-bold text-slate-800">Backend API Disconnected</div>
+                <div class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">Make sure your Django server is running at <code>http://localhost:8000</code>.</div>
+                <button class="btn text-xs mt-4" type="button" @click="fetchOrders">Retry Connection</button>
+              </div>
+              <div v-else class="table">
                 <div class="t-head muted">
                   <div>Order</div>
                   <div>Customer</div>
@@ -130,17 +135,27 @@
                   <div class="cell right strong">{{ formatPeso(o.total) }}</div>
                   <div class="cell center" @click.stop>
                     <label class="check">
-                      <input v-model="o.paid" type="checkbox" />
+                      <input
+                        :checked="o.paid"
+                        type="checkbox"
+                        @change="togglePaid(o, ($event.target as HTMLInputElement).checked)"
+                      />
                       <span class="sr">{{ o.paid ? 'Paid' : 'Not paid' }}</span>
                     </label>
                   </div>
                   <div class="cell center" @click.stop>
                     <label class="check">
-                      <input v-model="o.completed" type="checkbox" />
+                      <input
+                        :checked="o.completed"
+                        type="checkbox"
+                        @change="toggleCompleted(o, ($event.target as HTMLInputElement).checked)"
+                      />
                       <span class="sr">{{ o.completed ? 'Completed' : 'Not completed' }}</span>
                     </label>
                   </div>
                 </button>
+
+                <div v-if="filtered.length === 0" class="muted p-4 text-center">No orders found.</div>
               </div>
 
               <div class="pager">
@@ -196,15 +211,14 @@
         <button class="modal-close" type="button" aria-label="Close" @click="closeCreate">×</button>
         <div class="modal-inner">
           <div class="modal-title">Create order</div>
-          <div class="muted">Frontend mock only</div>
 
           <form class="form" @submit.prevent="saveCreate">
             <label class="field">
               <span class="label">Customer</span>
-              <input v-model.trim="form.customer" class="input" type="text" placeholder="Customer name" />
+              <input v-model.trim="form.customer" class="input" type="text" placeholder="Customer name" required />
             </label>
             <label class="field">
-              <span class="label">Total</span>
+              <span class="label">Total (₱)</span>
               <input v-model.number="form.total" class="input" type="number" min="0" step="1" placeholder="0" />
             </label>
             <label class="field">
@@ -222,7 +236,9 @@
 
             <div class="actions">
               <button class="btn" type="button" @click="closeCreate">Cancel</button>
-              <button class="btn primary" type="submit" :disabled="!form.customer">Save</button>
+              <button class="btn primary" type="submit" :disabled="!form.customer || saving">
+                {{ saving ? 'Saving...' : 'Save' }}
+              </button>
             </div>
           </form>
         </div>
@@ -255,7 +271,7 @@
               <div class="label">Paid</div>
               <div class="val">
                 <label class="check">
-                  <input v-model="details.paid" type="checkbox" />
+                  <input v-model="details.paid" type="checkbox" @change="saveDetailsSync" />
                   <span class="sr">{{ details.paid ? 'Paid' : 'Not paid' }}</span>
                 </label>
               </div>
@@ -264,7 +280,7 @@
               <div class="label">Completed</div>
               <div class="val">
                 <label class="check">
-                  <input v-model="details.completed" type="checkbox" />
+                  <input v-model="details.completed" type="checkbox" @change="saveDetailsSync" />
                   <span class="sr">{{ details.completed ? 'Completed' : 'Not completed' }}</span>
                 </label>
               </div>
@@ -284,15 +300,26 @@
 import logoUrl from '~/assets/digital_assets/logo.jpg?url'
 
 const logo = logoUrl
+const config = useRuntimeConfig()
 
-type Order = {
-  id: string
+type ApiOrder = {
+  id: number
   customer: string
   total: number
   items: number
   paid: boolean
   completed: boolean
-  createdAt: string // ISO
+  created_at: string
+}
+
+type Order = {
+  id: number | string
+  customer: string
+  total: number
+  items: number
+  paid: boolean
+  completed: boolean
+  createdAt: string
 }
 
 type FilterKey = 'all' | 'completed' | 'pending'
@@ -311,7 +338,35 @@ const filters: Array<{ key: FilterKey; label: string }> = [
 
 const query = ref('')
 const statusFilter = ref<FilterKey>('all')
-const orders = ref<Order[]>(seedOrders())
+const orders = ref<Order[]>([])
+const loading = ref(false)
+const saving = ref(false)
+const error = ref('')
+
+async function fetchOrders() {
+  loading.value = true
+  error.value = ''
+  try {
+    const data = await $fetch<ApiOrder[]>(`${config.public.apiBase}/api/bakedsushi/orders/list/`)
+    orders.value = data.map((o) => ({
+      id: o.id,
+      customer: o.customer,
+      total: o.total,
+      items: o.items,
+      paid: o.paid,
+      completed: o.completed,
+      createdAt: o.created_at
+    }))
+  } catch (err: any) {
+    error.value = 'Failed to load orders from API.'
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(() => {
+  fetchOrders()
+})
 
 const pageSizes = [5, 10, 20, 50]
 const pageSize = ref(10)
@@ -412,21 +467,53 @@ function closeCreate() {
   createOpen.value = false
 }
 
-function saveCreate() {
-  const id = String(1000 + Math.floor(Math.random() * 9000))
-  orders.value = [
-    {
-      id,
-      customer: form.customer,
-      total: Math.max(0, Math.round(Number(form.total) || 0)),
-      items: Math.max(1, Math.round(Number(form.items) || 1)),
-      paid: !!form.paid,
-      completed: !!form.completed,
-      createdAt: new Date().toISOString()
-    },
-    ...orders.value
-  ]
-  createOpen.value = false
+async function saveCreate() {
+  if (!form.customer) return
+  saving.value = true
+  try {
+    await $fetch(`${config.public.apiBase}/api/bakedsushi/orders/list/`, {
+      method: 'POST',
+      body: {
+        customer: form.customer,
+        total: Math.max(0, Math.round(Number(form.total) || 0)),
+        items: Math.max(1, Math.round(Number(form.items) || 1)),
+        paid: form.paid,
+        completed: form.completed
+      }
+    })
+    createOpen.value = false
+    await fetchOrders()
+  } catch (err) {
+    alert('Failed to create order.')
+  } finally {
+    saving.value = false
+  }
+}
+
+async function togglePaid(o: Order, paid: boolean) {
+  o.paid = paid
+  try {
+    await $fetch(`${config.public.apiBase}/api/bakedsushi/orders/${o.id}/`, {
+      method: 'PUT',
+      body: { paid }
+    })
+  } catch (err) {
+    o.paid = !paid
+    alert('Failed to update order paid status.')
+  }
+}
+
+async function toggleCompleted(o: Order, completed: boolean) {
+  o.completed = completed
+  try {
+    await $fetch(`${config.public.apiBase}/api/bakedsushi/orders/${o.id}/`, {
+      method: 'PUT',
+      body: { completed }
+    })
+  } catch (err) {
+    o.completed = !completed
+    alert('Failed to update order completion status.')
+  }
 }
 
 function openDetails(o: Order) {
@@ -440,21 +527,27 @@ function openDetails(o: Order) {
   detailsOpen.value = true
 }
 
-function closeDetails() {
-  // sync changes back (since `details` is a copy)
+async function saveDetailsSync() {
   const idx = orders.value.findIndex((o) => o.id === details.id)
   if (idx >= 0) {
     orders.value[idx].paid = details.paid
     orders.value[idx].completed = details.completed
   }
-  detailsOpen.value = false
+  try {
+    await $fetch(`${config.public.apiBase}/api/bakedsushi/orders/${details.id}/`, {
+      method: 'PUT',
+      body: {
+        paid: details.paid,
+        completed: details.completed
+      }
+    })
+  } catch (err) {
+    alert('Failed to save order updates.')
+  }
 }
 
-function refreshMock() {
-  orders.value = seedOrders()
-  query.value = ''
-  statusFilter.value = 'all'
-  page.value = 1
+function closeDetails() {
+  detailsOpen.value = false
 }
 
 function formatPeso(value: number) {
@@ -472,30 +565,6 @@ function formatWhen(iso: string) {
   }).format(d)
 }
 
-function seedOrders(): Order[] {
-  const customers = ['Aira', 'Janelle', 'Mark', 'Pia', 'Kyle', 'Tina', 'Jomar', 'Rhea', 'CJ', 'Aly']
-  const now = Date.now()
-  const count = 18 + Math.floor(Math.random() * 12)
-
-  const list: Order[] = []
-  for (let i = 0; i < count; i++) {
-    const paid = Math.random() > 0.25
-    const completed = Math.random() > 0.45
-    const total = Math.round(220 + Math.random() * 1800)
-    const items = 1 + Math.floor(Math.random() * 6)
-    list.push({
-      id: String(1000 + i),
-      paid,
-      completed,
-      customer: customers[Math.floor(Math.random() * customers.length)],
-      total,
-      items,
-      createdAt: new Date(now - i * 1000 * 60 * 32).toISOString()
-    })
-  }
-  return list
-}
-
 watch([query, statusFilter, pageSize], () => {
   page.value = 1
 })
@@ -504,6 +573,7 @@ watch(totalPages, (tp) => {
   if (page.value > tp) page.value = tp
 })
 </script>
+
 
 <!-- Styles migrated to `ui/app/assets/css/main.css` -->
 .top-actions {

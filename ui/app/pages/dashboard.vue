@@ -7,28 +7,25 @@
             <img class="side-logo" :src="logo" alt="Baked Sushi logo" />
             <div>
               <div class="side-name">Baked Sushi</div>
-              <div class="muted" style="font-size: 12px">Admin</div>
+              <div class="text-[11px] font-semibold text-slate-400">Admin Panel</div>
             </div>
           </div>
         </template>
-        <template #footer>Tip: Dashboard metrics here are mock-only.</template>
+        <template #footer>Connected to Backend API</template>
       </AppSidebar>
 
       <div class="main">
         <AppTopbar>
           <template #left>
-            <div class="brand">
-              <img class="brand-logo" :src="logo" alt="Baked Sushi logo" />
-              <div>
-                <div class="brand-name">Dashboard</div>
-                <div class="brand-tag muted">Quick view of store activity</div>
-              </div>
+            <div>
+              <h1 class="page-title">Dashboard</h1>
+              <p class="page-subtitle">Quick view of store activity</p>
             </div>
           </template>
 
           <template #right>
             <div class="top-actions">
-              <button class="btn" type="button" @click="refreshMock">Refresh mock</button>
+              <button class="btn" type="button" @click="fetchOrders">Refresh</button>
               <NuxtLink class="btn primary" to="/orders">View orders</NuxtLink>
             </div>
           </template>
@@ -56,7 +53,7 @@
               <div class="card-inner">
                 <div class="kpi-k">{{ salesPeriodLabel }} sales</div>
                 <div class="kpi-v">{{ formatCompactPeso(salesTotal) }}</div>
-                <div class="kpi-sub">Based on mock sales history</div>
+                <div class="kpi-sub">Total sales from real orders</div>
               </div>
             </article>
           </section>
@@ -65,16 +62,16 @@
             <div class="card-inner">
               <div class="sales-head">
                 <div>
-                  <div class="section-title">Sales overview</div>
-                  <div class="muted">Monitor totals across different time ranges</div>
+                  <div class="section-title text-sm font-extrabold text-slate-900">Sales overview</div>
+                  <div class="muted text-xs">Monitor totals across different time ranges</div>
                 </div>
 
-                <div class="seg" role="tablist" aria-label="Sales period">
+                <div class="seg flex items-center gap-1 bg-slate-100 p-1 rounded-xl" role="tablist" aria-label="Sales period">
                   <button
                     v-for="period in periods"
                     :key="period.key"
-                    class="seg-btn"
-                    :class="{ active: salesPeriod === period.key }"
+                    class="seg-btn text-xs font-semibold px-3 py-1 rounded-lg transition"
+                    :class="salesPeriod === period.key ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-900'"
                     type="button"
                     @click="salesPeriod = period.key"
                   >
@@ -83,7 +80,18 @@
                 </div>
               </div>
 
-              <div class="sales-grid">
+              <div v-if="loading" class="text-slate-500 text-xs p-8 text-center">Loading metrics...</div>
+              <div v-else-if="error" class="p-8 text-center bg-slate-50/50 border border-slate-100 rounded-xl my-4">
+                <div class="w-10 h-10 mx-auto rounded-full bg-rose-50 text-rose-500 flex items-center justify-center mb-3">
+                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                </div>
+                <div class="text-sm font-bold text-slate-800">Backend API Disconnected</div>
+                <div class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">Make sure your Django server is running at <code>http://localhost:8000</code>.</div>
+                <button class="btn text-xs mt-4" type="button" @click="fetchOrders">Retry Connection</button>
+              </div>
+              <div v-else class="sales-grid">
                 <div class="bars">
                   <div v-for="bar in salesBars" :key="bar.label" class="mini">
                     <div class="bar-top">
@@ -94,6 +102,7 @@
                       <div class="bar-fill" :style="{ width: `${bar.pct}%` }" />
                     </div>
                   </div>
+                  <div v-if="salesBars.length === 0" class="muted p-4">No order data available for chart.</div>
                 </div>
 
                 <div class="sales-summary">
@@ -136,7 +145,7 @@
                     <div class="right">Total</div>
                   </div>
 
-                  <div v-for="order in orders.slice(0, 6)" :key="order.id" class="t-row">
+                  <div v-for="order in recentOrders" :key="order.id" class="t-row">
                     <div class="mono">#{{ order.id }}</div>
                     <div>
                       <span class="pill" :class="order.status">{{ order.status }}</span>
@@ -144,6 +153,8 @@
                     <div>{{ order.customer }}</div>
                     <div class="right">{{ formatPeso(order.total) }}</div>
                   </div>
+
+                  <div v-if="recentOrders.length === 0" class="muted p-4 text-center">No orders recorded yet.</div>
                 </div>
               </div>
             </article>
@@ -172,10 +183,21 @@
 import logoUrl from '~/assets/digital_assets/logo.jpg?url'
 
 const logo = logoUrl
+const config = useRuntimeConfig()
+
+type ApiOrder = {
+  id: number
+  customer: string
+  total: number
+  items: number
+  paid: boolean
+  completed: boolean
+  created_at: string
+}
 
 type OrderStatus = 'completed' | 'pending'
 type Order = {
-  id: string
+  id: number | string
   status: OrderStatus
   customer: string
   total: number
@@ -192,9 +214,26 @@ const periods: Array<{ key: SalesPeriod; label: string }> = [
 ]
 
 const salesPeriod = ref<SalesPeriod>('day')
+const apiOrders = ref<ApiOrder[]>([])
+const loading = ref(false)
+const error = ref('')
 
-const orders = ref<Order[]>(seedOrders())
-const dailySales = ref<number[]>(seedDailySales())
+async function fetchOrders() {
+  loading.value = true
+  error.value = ''
+  try {
+    const data = await $fetch<ApiOrder[]>(`${config.public.apiBase}/api/bakedsushi/orders/list/`)
+    apiOrders.value = data
+  } catch (err: any) {
+    error.value = 'Failed to load dashboard data from API.'
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(() => {
+  fetchOrders()
+})
 
 const sidebarItems = [
   { label: 'Dashboard', to: '/dashboard' },
@@ -202,10 +241,43 @@ const sidebarItems = [
   { label: 'Products', to: '/products' }
 ]
 
+const orders = computed<Order[]>(() =>
+  apiOrders.value.map((o) => ({
+    id: o.id,
+    status: o.completed ? 'completed' : 'pending',
+    customer: o.customer,
+    total: o.total,
+    createdAt: o.created_at
+  }))
+)
+
+const recentOrders = computed(() =>
+  [...orders.value]
+    .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
+    .slice(0, 6)
+)
+
 const completedCount = computed(() => orders.value.filter((order) => order.status === 'completed').length)
 const pendingCount = computed(() => orders.value.filter((order) => order.status === 'pending').length)
 
 const salesPeriodLabel = computed(() => periods.find((period) => period.key === salesPeriod.value)?.label ?? 'Day')
+
+// Group orders into daily sales totals for up to 365 days
+const dailySales = computed(() => {
+  const now = new Date()
+  const days = 365
+  const result: number[] = new Array(days).fill(0)
+
+  for (const o of apiOrders.value) {
+    const d = new Date(o.created_at)
+    const diffTime = Math.abs(now.getTime() - d.getTime())
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
+    if (diffDays >= 0 && diffDays < days) {
+      result[diffDays] += o.total || 0
+    }
+  }
+  return result
+})
 
 const salesTotal = computed(() => {
   const days = periodDays(salesPeriod.value)
@@ -217,11 +289,11 @@ const avgPerDay = computed(() => {
   return Math.round(salesTotal.value / Math.max(1, days))
 })
 
-const bestDayValue = computed(() => Math.max(...dailySales.value))
+const bestDayValue = computed(() => (dailySales.value.length ? Math.max(...dailySales.value) : 0))
 const bestDayIndex = computed(() => dailySales.value.findIndex((value) => value === bestDayValue.value))
 const bestDayLabel = computed(() => {
   const index = bestDayIndex.value
-  if (index < 0) return '-'
+  if (index < 0 || bestDayValue.value === 0) return '-'
   return index === 0 ? 'Today' : `${index}d ago`
 })
 
@@ -238,20 +310,15 @@ const salesBars = computed(() => {
   }))
 })
 
-function refreshMock() {
-  orders.value = seedOrders()
-  dailySales.value = seedDailySales()
-}
-
 function formatPeso(value: number) {
-  return new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(value)
+  return new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(value || 0)
 }
 
 function formatCompactPeso(value: number) {
   const formatted = new Intl.NumberFormat('en-PH', {
     notation: 'compact',
     maximumFractionDigits: 1
-  }).format(value)
+  }).format(value || 0)
 
   return `PHP ${formatted}`
 }
@@ -283,41 +350,6 @@ function bucket(values: number[], maxBars: number) {
   return out.slice(0, take)
 }
 
-function seedOrders(): Order[] {
-  const customers = ['Aira', 'Janelle', 'Mark', 'Pia', 'Kyle', 'Tina', 'Jomar', 'Rhea', 'CJ', 'Aly']
-  const now = Date.now()
-  const count = 14 + Math.floor(Math.random() * 10)
-
-  const list: Order[] = []
-
-  for (let index = 0; index < count; index++) {
-    const status: OrderStatus = Math.random() > 0.45 ? 'completed' : 'pending'
-    const total = Math.round(220 + Math.random() * 1500)
-
-    list.push({
-      id: String(1000 + index),
-      status,
-      customer: customers[Math.floor(Math.random() * customers.length)],
-      total,
-      createdAt: new Date(now - index * 1000 * 60 * 35).toISOString()
-    })
-  }
-
-  return list
-}
-
-function seedDailySales(): number[] {
-  const days = 30
-  const out: number[] = []
-
-  for (let index = 0; index < days; index++) {
-    const weekendBoost = index % 7 === 0 || index % 7 === 1 ? 1.25 : 1
-    const base = 1800 + Math.random() * 5200
-    out.push(Math.round(base * weekendBoost))
-  }
-
-  return out
-}
-
 function noop() {}
 </script>
+

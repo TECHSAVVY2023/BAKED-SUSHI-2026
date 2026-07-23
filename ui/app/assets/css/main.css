@@ -1504,53 +1504,186 @@ body {
   }
 }
 
-/* ---- End dashboard.vue (additional) ---- */
+/* ---- End dashboard.vue (additional) ---- *//* Admin layout shared (dashboard/products/orders) */
+.admin-page {
+  min-height: 100vh;
+  color: var(--ink);
+  background: #f8fafc;
+}
 
-/* Centralized Tailwind component mappings (use Tailwind utilities via @apply)
-   These provide consistent, reusable component classes across pages. */
+.shell,
+.main {
+  min-height: 100vh;
+}
+
+.side {
+  display: none;
+}
+
+.sidebar {
+  color: rgba(20, 12, 10, 0.88);
+}
+
+.sidebar.is-fixed {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 70;
+  width: 260px;
+}
+
+.sidebar.is-sticky {
+  position: sticky;
+  top: 0;
+  width: 260px;
+  height: 100vh;
+}
+
+.side-card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border: none;
+  border-right: 1px solid #e2e8f0;
+  border-radius: 0;
+  background: #ffffff;
+}
+
+.side-card .brand {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.side-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.side-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.side-name {
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.sidebar .nav {
+  display: grid;
+  gap: 6px;
+  padding: 16px 12px;
+}
+
+.sidebar .dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: rgba(242, 124, 134, 0.38);
+}
+
+.sidebar .label {
+  min-width: 0;
+}
+
+.side-card .footer {
+  margin-top: auto;
+  padding: 14px 16px;
+  border-top: 1px solid #f1f5f9;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  background: #f8fafc;
+}
+
+@media (min-width: 980px) {
+  .side {
+    display: block;
+  }
+
+  .main {
+    margin-left: 260px;
+  }
+}
+
+/* Data table controls (products/orders) */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
+  flex-wrap: wrap;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Centralized Tailwind component mappings */
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center gap-2 h-10 px-4 rounded-full border border-slate-200 bg-white/90 text-sm font-semibold text-slate-900 transition-shadow;
+    @apply inline-flex items-center justify-center gap-2 h-9 px-4 rounded-xl border border-slate-200/90 bg-white text-xs font-bold text-slate-700 shadow-xs transition-all hover:bg-slate-50 hover:text-slate-900 active:scale-[0.98];
   }
 
   .btn.primary,
   .btn-primary,
   .page-btn.primary {
-    @apply bg-gradient-to-r from-[#f27c86] to-[#d6a64a] text-slate-950 border-transparent shadow-lg;
+    @apply bg-gradient-to-r from-[#f27c86] to-[#d6a64a] text-slate-950 border-transparent shadow-sm hover:opacity-95 font-bold;
   }
 
   .card {
-    @apply bg-white border border-slate-200 rounded-[1.125rem] shadow-[0_4px_16px_rgba(15,23,42,0.06)] overflow-hidden;
+    @apply bg-white border border-slate-200/80 rounded-2xl shadow-[0_2px_10px_rgba(15,23,42,0.03)] overflow-hidden transition-all;
   }
 
   .card-inner {
-    @apply p-4;
+    @apply p-6;
   }
 
-  .brand-logo {
-    @apply w-11 h-11 rounded-xl border border-slate-200 bg-white/80 object-cover;
+  .page-title {
+    @apply text-lg font-extrabold text-slate-900 tracking-tight leading-none;
+  }
+
+  .page-subtitle {
+    @apply text-xs font-medium text-slate-500 mt-1;
   }
 
   .topbar {
-    @apply sticky top-0 z-50 border-b border-slate-200 h-20 bg-white;
+    @apply sticky top-0 z-50 border-b border-slate-200/80 h-16 bg-white/95 backdrop-blur-md;
   }
 
   .sidebar .link {
-    @apply flex items-center gap-3.5 px-4 py-3 rounded-xl border border-transparent font-bold text-slate-500 transition-all duration-200 uppercase tracking-wider text-[11px] select-none;
+    @apply flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-transparent font-bold text-slate-500 transition-all duration-150 tracking-wide text-xs select-none;
     background: transparent;
   }
 
   .sidebar .link:hover:not(.router-link-active) {
-    @apply bg-white/60 text-slate-900 border-slate-200/50 shadow-sm;
+    @apply bg-slate-100/80 text-slate-900;
   }
 
   .sidebar .link.router-link-active,
   .sidebar .link.router-link-exact-active {
-    @apply bg-gradient-to-r from-[#f27c86] to-[#d6a64a] text-[#090b14] font-extrabold shadow-[0_8px_22px_rgba(242,124,134,0.22)] border-transparent;
+    @apply bg-gradient-to-r from-[#f27c86] to-[#d6a64a] text-slate-950 font-extrabold shadow-sm border-transparent;
   }
 
   .sidebar .nav-icon {
-    @apply w-5 h-5 shrink-0 transition-transform duration-200;
+    @apply w-4 h-4 shrink-0 transition-transform duration-150;
   }
 
   .sidebar .link:hover .nav-icon {
@@ -1562,54 +1695,65 @@ body {
   }
 
   .chip {
-    @apply inline-flex items-center h-9 px-3 rounded-full border border-slate-200 bg-white/80 text-slate-800 font-semibold;
+    @apply inline-flex items-center h-8 px-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 font-semibold text-xs transition-colors hover:bg-slate-100;
+  }
+
+  .chip.active {
+    @apply bg-slate-900 text-white border-slate-900 font-bold;
   }
 
   /* Layout helpers centralized for admin pages */
-  .top-actions { @apply flex items-center gap-2 }
-  .content { @apply py-4 grid gap-3 }
-  .grid { @apply grid gap-3 }
-  .kpis { @apply grid grid-cols-3 gap-3 }
-  .kpi-k { font-weight: 950; letter-spacing: -0.01em }
-  .kpi-v { margin-top: 8px; font-size: 34px; font-weight: 950; letter-spacing: -0.03em }
-  .kpi-sub { margin-top: 6px; font-size: 13px }
-  .kpi-accent { background: radial-gradient(900px 350px at 20% 10%, rgba(242,124,134,0.22), transparent 55%), radial-gradient(700px 320px at 85% 70%, rgba(214,166,74,0.18), transparent 60%), rgba(255,255,255,0.78) }
+  .top-actions { @apply flex items-center gap-2.5 }
+  .content { @apply py-6 space-y-6 max-w-7xl mx-auto px-6 }
+  .grid { @apply grid gap-5 }
+  .kpis { @apply grid grid-cols-1 sm:grid-cols-3 gap-5 }
+  .kpi-k { @apply text-xs font-bold text-slate-400 uppercase tracking-wider }
+  .kpi-v { @apply mt-2 text-3xl font-black text-slate-900 tracking-tight }
+  .kpi-sub { @apply mt-1 text-xs font-medium text-slate-500 }
+  .kpi-accent { @apply bg-gradient-to-br from-rose-50/60 to-amber-50/60 border-rose-200/60 }
 
-  /* Table helpers (rows/heads share base styles, columns kept page-specific) */
-  .t-head, .t-row { @apply grid gap-3 items-center }
-  .t-head { @apply text-xs uppercase font-extrabold tracking-wider }
-  .t-row { @apply p-3 rounded-lg border bg-white border-slate-200 }
-  .t-row:hover { @apply bg-slate-50 }
+  /* Table helpers */
+  .t-head, .t-row { @apply grid gap-4 items-center }
+  .t-head { @apply text-[11px] uppercase font-extrabold tracking-wider text-slate-400 pb-2 }
+  .t-row { @apply p-4 rounded-xl border bg-white border-slate-200/70 transition-all hover:border-slate-300 hover:shadow-xs }
 
   .modal-panel,
   .viewer-panel {
-    @apply rounded-[1.25rem] bg-white/95 border border-white/40 shadow-[0_40px_120px_rgba(15,23,42,0.45)];
+    @apply rounded-2xl bg-white border border-slate-200 shadow-2xl;
   }
 
   .modal-backdrop,
   .viewer-backdrop {
-    @apply fixed inset-0 bg-slate-900/40 backdrop-blur-sm;
+    @apply fixed inset-0 bg-slate-950/40 backdrop-blur-xs;
   }
 
   .modal-close,
   .viewer-close {
-    @apply absolute top-3 right-3 w-10 h-10 rounded-full grid place-items-center border border-slate-200 bg-white/90 text-slate-800 text-lg;
+    @apply absolute top-4 right-4 w-8 h-8 rounded-full grid place-items-center border border-slate-200 bg-slate-50 text-slate-600 text-sm font-bold transition hover:bg-slate-100 hover:text-slate-900;
   }
 
   .modal-inner {
-    @apply p-4;
+    @apply p-6;
   }
 
-  .modal-title { @apply font-extrabold text-lg }
+  .modal-title { @apply font-bold text-lg text-slate-900 }
 
   .page-btn,
   .page-num {
-    @apply h-9 min-w-[38px] px-3 rounded-lg border border-slate-200 bg-white/80 font-semibold text-slate-800;
+    @apply h-8 min-w-[34px] px-2.5 rounded-lg border border-slate-200 bg-white font-semibold text-slate-700 text-xs transition hover:bg-slate-50 disabled:opacity-40;
+  }
+
+  .page-num.active {
+    @apply bg-slate-900 text-white border-slate-900 font-bold;
   }
 
   .input,
   .textarea {
-    @apply w-full rounded-lg border border-slate-200 bg-white/90 p-2 outline-none transition;
+    @apply w-full rounded-xl border border-slate-200 bg-slate-50/50 p-2.5 text-xs text-slate-900 outline-none transition focus:border-slate-400 focus:bg-white focus:ring-2 focus:ring-slate-900/5;
+  }
+
+  .search-input {
+    @apply w-full rounded-xl border border-slate-200 bg-slate-50/50 py-2 pl-9 pr-3 text-xs text-slate-900 outline-none transition focus:border-slate-400 focus:bg-white;
   }
 
   .social-btn {
