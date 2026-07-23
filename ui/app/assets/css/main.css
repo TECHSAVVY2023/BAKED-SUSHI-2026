@@ -31,9 +31,7 @@ body {
 .admin-page {
   min-height: 100vh;
   color: var(--ink);
-  background: radial-gradient(1200px 700px at 20% -10%, rgba(255, 224, 228, 0.9), rgba(255, 255, 255, 0)),
-    radial-gradient(900px 600px at 80% 30%, rgba(214, 166, 74, 0.12), rgba(255, 255, 255, 0)),
-    linear-gradient(180deg, rgba(255, 243, 245, 1), rgba(255, 255, 255, 1));
+  background: #fff;
 }
 
 .shell,
@@ -51,16 +49,16 @@ body {
 
 .sidebar.is-fixed {
   position: fixed;
-  inset: 16px auto 16px 16px;
+  inset: 0 auto 0 0;
   z-index: 70;
-  width: 248px;
+  width: 260px;
 }
 
 .sidebar.is-sticky {
   position: sticky;
-  top: 16px;
-  width: 248px;
-  height: calc(100vh - 32px);
+  top: 0;
+  width: 260px;
+  height: 100vh;
 }
 
 .side-card {
@@ -68,18 +66,18 @@ body {
   height: 100%;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid rgba(242, 161, 170, 0.34);
-  border-radius: 24px;
-  background:
-    radial-gradient(420px 220px at 20% 0%, rgba(242, 124, 134, 0.16), transparent 58%),
-    linear-gradient(180deg, rgba(255, 250, 251, 0.94), rgba(255, 244, 246, 0.86));
-  box-shadow: 0 24px 70px rgba(20, 12, 10, 0.1);
-  backdrop-filter: blur(18px);
+  border: none;
+  border-right: 1px solid #e2e8f0;
+  border-radius: 0;
+  background: #fff;
 }
 
 .side-card .brand {
-  padding: 18px;
-  border-bottom: 1px solid rgba(20, 12, 10, 0.08);
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .sidebar .nav {
@@ -101,11 +99,7 @@ body {
   min-width: 0;
 }
 
-.sidebar .link.router-link-active,
-.sidebar .link.router-link-exact-active {
-  border-color: rgba(242, 124, 134, 0.34);
-  background: linear-gradient(135deg, rgba(242, 124, 134, 0.2), rgba(214, 166, 74, 0.18));
-}
+
 
 .side-card .footer {
   margin-top: auto;
@@ -123,7 +117,7 @@ body {
   }
 
   .main {
-    margin-left: 280px;
+    margin-left: 260px;
   }
 }
 
@@ -664,7 +658,7 @@ body {
   }
 
   .main {
-    margin-left: 280px;
+    margin-left: 260px;
   }
 }
 
@@ -1526,7 +1520,7 @@ body {
   }
 
   .card {
-    @apply bg-white/80 border border-slate-200 rounded-[1.125rem] shadow-[0_18px_50px_rgba(15,23,42,0.08)] overflow-hidden;
+    @apply bg-white border border-slate-200 rounded-[1.125rem] shadow-[0_4px_16px_rgba(15,23,42,0.06)] overflow-hidden;
   }
 
   .card-inner {
@@ -1538,15 +1532,33 @@ body {
   }
 
   .topbar {
-    @apply sticky top-0 z-50 border-b border-[#f2a1aa]/40;
-    background:
-      linear-gradient(135deg, rgba(242, 124, 134, 0.24), rgba(255, 255, 255, 0.88) 34%, rgba(242, 124, 134, 0.16) 70%, rgba(214, 166, 74, 0.18)),
-      rgba(255, 248, 249, 0.9);
-    backdrop-filter: blur(16px);
+    @apply sticky top-0 z-50 border-b border-slate-200 h-20 bg-white;
   }
 
   .sidebar .link {
-    @apply flex items-center gap-3 px-3 py-2 rounded-lg bg-white/80 border border-slate-200 font-semibold text-slate-900;
+    @apply flex items-center gap-3.5 px-4 py-3 rounded-xl border border-transparent font-bold text-slate-500 transition-all duration-200 uppercase tracking-wider text-[11px] select-none;
+    background: transparent;
+  }
+
+  .sidebar .link:hover:not(.router-link-active) {
+    @apply bg-white/60 text-slate-900 border-slate-200/50 shadow-sm;
+  }
+
+  .sidebar .link.router-link-active,
+  .sidebar .link.router-link-exact-active {
+    @apply bg-gradient-to-r from-[#f27c86] to-[#d6a64a] text-[#090b14] font-extrabold shadow-[0_8px_22px_rgba(242,124,134,0.22)] border-transparent;
+  }
+
+  .sidebar .nav-icon {
+    @apply w-5 h-5 shrink-0 transition-transform duration-200;
+  }
+
+  .sidebar .link:hover .nav-icon {
+    @apply scale-105;
+  }
+
+  .sidebar .icon-wrap {
+    @apply flex items-center justify-center shrink-0;
   }
 
   .chip {
@@ -1566,8 +1578,8 @@ body {
   /* Table helpers (rows/heads share base styles, columns kept page-specific) */
   .t-head, .t-row { @apply grid gap-3 items-center }
   .t-head { @apply text-xs uppercase font-extrabold tracking-wider }
-  .t-row { @apply p-3 rounded-lg border bg-white/72 border-slate-200 }
-  .t-row:hover { @apply bg-white/90 }
+  .t-row { @apply p-3 rounded-lg border bg-white border-slate-200 }
+  .t-row:hover { @apply bg-slate-50 }
 
   .modal-panel,
   .viewer-panel {
@@ -1598,6 +1610,14 @@ body {
   .input,
   .textarea {
     @apply w-full rounded-lg border border-slate-200 bg-white/90 p-2 outline-none transition;
+  }
+
+  .social-btn {
+    @apply flex items-center justify-center gap-3 w-full h-11 px-6 rounded-full border border-slate-200 bg-[#090b14] text-sm font-semibold text-white transition-all hover:bg-[#161a2b] hover:shadow-lg active:scale-[0.98];
+  }
+
+  .social-ico {
+    @apply flex items-center justify-center w-5 h-5 shrink-0;
   }
 }
 

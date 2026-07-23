@@ -281,7 +281,7 @@
 </template>
 
 <script setup lang="ts">
-import logoUrl from '~/assets/digital_assets/logo.png?url'
+import logoUrl from '~/assets/digital_assets/logo.jpg?url'
 
 const logo = logoUrl
 
@@ -545,9 +545,7 @@ watch(totalPages, (tp) => {
 }
 
 .kpi-accent {
-  background: radial-gradient(900px 350px at 20% 10%, rgba(242, 124, 134, 0.22), transparent 55%),
-    radial-gradient(700px 320px at 85% 70%, rgba(214, 166, 74, 0.18), transparent 60%),
-    rgba(255, 255, 255, 0.78);
+  background: linear-gradient(135deg, rgba(242, 124, 134, 0.08), rgba(214, 166, 74, 0.08));
 }
 .t-head,
 .t-row {
@@ -570,12 +568,12 @@ watch(totalPages, (tp) => {
   padding: 12px;
   border-radius: 18px;
   border: 1px solid rgba(20, 12, 10, 0.08);
-  background: rgba(255, 255, 255, 0.74);
+  background: #fff;
   cursor: pointer;
 }
 
 .t-row:hover {
-  background: rgba(255, 255, 255, 0.88);
+  background: #f8fafc;
 }
 
 .cell {
@@ -784,7 +782,7 @@ watch(totalPages, (tp) => {
   }
 
   .main {
-    margin-left: 280px;
+    margin-left: 260px;
   }
 }
 

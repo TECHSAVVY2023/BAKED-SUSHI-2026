@@ -169,7 +169,7 @@
 </template>
 
 <script setup lang="ts">
-import logoUrl from '~/assets/digital_assets/logo.png?url'
+import logoUrl from '~/assets/digital_assets/logo.jpg?url'
 
 const logo = logoUrl
 

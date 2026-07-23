@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TECHSAVVY</title>
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Source Sans Pro", sans-serif;
+      }
+
+      .slide-in-bottom {
+        animation: slide-in-bottom 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+          both;
+      }
+
+      .fade-in {
+        animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) 0.6s both;
+      }
+
+      @keyframes slide-in-bottom {
+        0% {
+          transform: translateY(600px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes fade-in {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="text-white">
+    <div
+      class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-700 via-purple-700 to-violet-900"
+    >
+      <!-- HERO -->
+      <div class="flex flex-col items-center justify-center text-center px-6">
+        <div
+          class="lg:bg-white bg-indigo-900 lg:bg-opacity-10 backdrop-blur-lg rounded-3xl px-10 pb-10 shadow-2xl slide-in-bottom"
+        >
+          <img
+            src="https://lsu-media-styles.sgp1.digitaloceanspaces.com/test/img/logo/TechSavvyLogo.png"
+            class="w-56 md:w-72 mx-auto lg:-mt-10 -mt-5"
+          />
+
+          <h1 class="text-4xl md:text-5xl font-bold mb-4 lg:-mt-20 -mt-10">TECHSAVVY</h1>
+
+          <p class="text-indigo-200 text-lg md:text-xl mb-4">
+            Empowering Future Innovators
+          </p>
+
+          <p class="text-indigo-300 text-sm"> © 2026 www.techsavvies.space</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

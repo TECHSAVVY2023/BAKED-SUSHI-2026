@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div
     class="min-h-screen text-slate-900"
     style="background: radial-gradient(1200px 700px at 16% -8%, rgba(242, 124, 134, 0.34), rgba(255, 255, 255, 0) 58%), radial-gradient(1100px 680px at 86% 0%, rgba(242, 161, 170, 0.22), rgba(255, 255, 255, 0) 60%), linear-gradient(180deg, rgba(255, 238, 241, 1), rgba(255, 247, 248, 1) 38%, rgba(255, 255, 255, 1) 100%);"
@@ -784,7 +784,7 @@
 </template>
 
 <script setup lang="ts">
-import logoUrl from '~/assets/digital_assets/logo.png?url'
+import logoUrl from '~/assets/digital_assets/logo.jpg?url'
 import heroVideoUrl from '~/assets/digital_assets/mp_.mp4?url'
 
 const logo = logoUrl
